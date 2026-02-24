@@ -3,14 +3,14 @@
 A productivity web app for developers featuring an AI-powered duck debugger 
 that guides instead of solves — helping junior developers learn without shame.
 
-## 🚀 Features (V1 - In Development)
+## Features (V1 - In Development)
 
 - **Duck Debugger**: AI-powered debugging assistant that asks guiding questions instead of giving solutions
 - **Custom Authentication**: Secure signup/login with bcrypt password hashing
 - **Duck Cosmetics**: Unlock duck skins and hats by using the app
 - **Dark Mode**: Toggle between light and dark themes
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend/Backend**: Next.js 15 + TypeScript
 - **Styling**: Tailwind CSS
@@ -36,10 +36,10 @@ that guides instead of solves — helping junior developers learn without shame.
 ```
 5. Open [http://localhost:3000](http://localhost:3000)
 
-## 🎯 Project Status
+## Project Status
 
 Currently building V1 - targeting completion by summer 2026.
 
-## 📝 License
+## License
 
 MIT
