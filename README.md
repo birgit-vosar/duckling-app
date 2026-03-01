@@ -1,4 +1,4 @@
-# 🦆 Duckling
+# Duckling 🦆
 
 A productivity web app for developers featuring an AI-powered duck debugger 
 that guides instead of solves — helping junior developers learn without shame.
@@ -18,7 +18,7 @@ that guides instead of solves — helping junior developers learn without shame.
 - **AI**: Anthropic Claude API (Haiku 4.5)
 - **Deployment**: Vercel
 
-## 📦 Getting Started
+## Getting Started
 
 1. Clone the repository
 2. Install dependencies:
