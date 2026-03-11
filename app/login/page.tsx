@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 
 
-export default function Signup() {
+export default function Login() {
     const [error, setError] = useState('');
 const router = useRouter();
 
@@ -20,7 +20,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const password = formData.get('password') as string;
 
     try {
-        const response = await fetch('/api/auth/signup', {
+        const response = await fetch('/api/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, password })
@@ -29,13 +29,13 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         const data = await response.json();
 
         if (!response.ok) {
-            setError(data.error || 'Signup failed');
+            setError(data.error || 'Login failed');
             return
         }
 
-        router.push('/login');
+        router.push('/');
     } catch (err) {
-        setError('Something went wrong with signup.')
+        setError('Something went wrong with login.')
     }
 }
 
@@ -43,7 +43,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         <div className='bg-[#0b111e] flex flex-col items-center justify-center min-h-screen  '>
             <div className='bg-[#0e1525] p-6 border border-[#182543] rounded-lg w-full max-w-md'>
                 <div>
-                    <h2 className='mb-6 text-center font-semibold text-2xl/9 tracking-tight'>🦆 WorkFlow Companion</h2>
+                    <h2 className='mb-6 text-center font-semibold text-2xl/9 tracking-tight'>🦆 Welcome back!</h2>
                 </div>
                 <div>
                     <form onSubmit={handleSubmit} className='space-y-6'>
@@ -86,7 +86,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                         </div>
                         <div>
                             <button type='submit' className='items-center justify-center rounded-md text-sm font-medium bg-blue-500 h-10 w-full'>
-                                Sign up
+                                Log in
                             </button>
                         </div>
                     </form>
