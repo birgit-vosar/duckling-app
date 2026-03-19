@@ -3,41 +3,38 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-
-
-
 export default function Signup() {
     const [error, setError] = useState('');
-const router = useRouter();
+    const router = useRouter();
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError('');
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError('');
 
-    const formData = new FormData(e.currentTarget);
+        const formData = new FormData(e.currentTarget);
 
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
 
-    try {
-        const response = await fetch('/api/auth/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
+        try {
+            const response = await fetch('/api/auth/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (!response.ok) {
-            setError(data.error || 'Signup failed');
-            return
+            if (!response.ok) {
+                setError(data.error || 'Signup failed');
+                return
+            }
+
+            router.push('/login');
+        } catch (err) {
+            setError('Something went wrong with signup.')
         }
-
-        router.push('/login');
-    } catch (err) {
-        setError('Something went wrong with signup.')
     }
-}
 
     return (
         <div className='bg-[#0b111e] flex flex-col items-center justify-center min-h-screen  '>

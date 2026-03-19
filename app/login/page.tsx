@@ -3,47 +3,45 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-
-
-
 export default function Login() {
     const [error, setError] = useState('');
-const router = useRouter();
+    const router = useRouter();
 
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError('');
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError('');
 
-    const formData = new FormData(e.currentTarget);
+        const formData = new FormData(e.currentTarget);
 
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
 
-    try {
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password })
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (!response.ok) {
-            setError(data.error || 'Login failed');
-            return
+            if (!response.ok) {
+                setError(data.error || 'Login failed');
+                return
+            }
+
+            router.push('/');
+        } catch (err) {
+            setError('Something went wrong with login.')
         }
-
-        router.push('/');
-    } catch (err) {
-        setError('Something went wrong with login.')
     }
-}
 
     return (
         <div className='bg-[#0b111e] flex flex-col items-center justify-center min-h-screen  '>
             <div className='bg-[#0e1525] p-6 border border-[#182543] rounded-lg w-full max-w-md'>
                 <div>
-                    <h2 className='mb-6 text-center font-semibold text-2xl/9 tracking-tight'>🦆 Welcome back!</h2>
+                    <h2 className='mb-2 text-center font-semibold text-2xl/9 tracking-tight'>🦆 WorkFlow Companion</h2>
+                    <h5 className='mb-6 text-center  text-md/9 '>welcome to login</h5>
                 </div>
                 <div>
                     <form onSubmit={handleSubmit} className='space-y-6'>
