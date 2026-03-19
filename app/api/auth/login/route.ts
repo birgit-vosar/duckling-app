@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { Pool } from 'pg';
+import { pool } from '@/app/lib/db';
 import { cookies } from 'next/headers';
 import { generateSessionToken } from '@/app/lib/auth';
 
@@ -19,11 +19,6 @@ export async function POST(req: Request) {
         { status: 400 },
       );
     }
-
-    const pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false },
-    });
 
     const result = await pool.query(
       'SELECT id, email, password_hash FROM users WHERE email = $1',
