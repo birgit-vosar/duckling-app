@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
     const publicPaths = ['/login', '/signup', '/_next', '/favicon.ico'];
-    if (publicPaths.includes(path) || path.startsWith('/_next')) {
+    if (publicPaths.includes(path) || path.startsWith('/api/auth') || path.startsWith('/_next')) {
         return NextResponse.next();
     }
     
