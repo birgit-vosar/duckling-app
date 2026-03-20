@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { pool } from '@/app/lib/db';
 import { cookies } from 'next/headers';
-import { generateSessionToken } from '@/app/lib/auth';
+import { createUserSession } from '@/app/lib/auth';
 
 export async function POST(req: Request) {
   try {
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     );
 
     if (result.rows.length === 0) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
     const user = result.rows[0];
@@ -34,20 +34,10 @@ export async function POST(req: Request) {
     const isMatch = await bcrypt.compare(password, user.password_hash);
 
     if (!isMatch) {
-      return NextResponse.json({ error: 'Invalid password' }, { status: 401 });
+      return NextResponse.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
-    await pool.query('DELETE FROM sessions WHERE user_id = $1', [user.id]);
-
-    const sessionToken = generateSessionToken();
-
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
-
-    await pool.query(
-      'INSERT INTO sessions (user_id, session_token, expires_at) VALUES ($1, $2, $3)',
-      [user.id, sessionToken, expiresAt],
-    );
+    const sessionToken = await createUserSession(user.id);
 
     const cookieStore = await cookies();
     cookieStore.set('session_token', sessionToken, {
@@ -58,10 +48,10 @@ export async function POST(req: Request) {
       path: '/',
     });
 
-    return NextResponse.json({message: 'Login successful'}, {status: 200});
+    return NextResponse.json({ message: 'Login successful' }, { status: 200 });
 
   } catch (error) {
-    console.log('Error logging person with database', error);
+    console.error('Login error', error);
     return NextResponse.json({ error: 'Login failed' }, { status: 500 });
   }
 }
