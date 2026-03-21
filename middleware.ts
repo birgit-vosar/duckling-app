@@ -2,8 +2,8 @@ export const config = {
   runtime: 'nodejs',
 };
 
-import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
+import { NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import { pool } from '@/app/lib/db';
 
 export async function middleware(request: NextRequest) {
