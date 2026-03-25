@@ -5,16 +5,24 @@ import { useRouter } from 'next/navigation';
 
 export default function Login() {
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setError('');
+        setLoading(true);
 
         const formData = new FormData(e.currentTarget);
-
         const email = formData.get('email') as string;
         const password = formData.get('password') as string;
+
+        if (!email || !password) {
+            setError('Please fill in all fields');
+            setLoading(false);
+            return;
+        }
 
         try {
             const response = await fetch('/api/auth/login', {
@@ -27,12 +35,15 @@ export default function Login() {
 
             if (!response.ok) {
                 setError(data.error || 'Login failed');
+                setLoading(false);
                 return
             }
 
             router.push('/');
         } catch (err) {
+            console.error('Login error', err)
             setError('Something went wrong with login.')
+            setLoading(false);
         }
     }
 
@@ -40,8 +51,8 @@ export default function Login() {
         <div className='bg-[#0b111e] flex flex-col items-center justify-center min-h-screen  '>
             <div className='bg-[#0e1525] p-6 border border-[#182543] rounded-lg w-full max-w-md'>
                 <div>
-                    <h2 className='mb-2 text-center font-semibold text-2xl/9 tracking-tight'>🦆 WorkFlow Companion</h2>
-                    <h5 className='mb-6 text-center  text-md/9 '>welcome to login</h5>
+                    <h2 className='mb-1 text-center font-semibold text-2xl/9 tracking-tight'>🦆 WorkFlow Companion</h2>
+                    <p className='mb-6 text-center text-gray-300 text-md/9 '>welcome to login</p>
                 </div>
                 <div>
                     <form onSubmit={handleSubmit} className='space-y-6'>
@@ -84,10 +95,16 @@ export default function Login() {
                         </div>
                         <div>
                             <button type='submit' className='items-center justify-center rounded-md text-sm font-medium bg-blue-500 h-10 w-full'>
-                                Log in
+                                {loading ? 'Logging in...' : "Log in"}
                             </button>
                         </div>
                     </form>
+                    <div className='mt-4 text-center text-sm'>
+                        <span className='text-gray-400'>Don't have an account? </span>
+                        <a href='/signup' className='text-blue-500 hover:text-blue-400'>
+                        Sign up
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
