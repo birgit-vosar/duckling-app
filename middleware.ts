@@ -9,7 +9,7 @@ import { pool } from '@/app/lib/db';
 export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
 
-    const publicPaths = ['/login', '/signup', '/_next', '/favicon.ico'];
+    const publicPaths = ['/login', '/signup', '/_next', '/favicon.ico', '/api/debug/chat'];
     if (publicPaths.includes(path) || path.startsWith('/api/auth') || path.startsWith('/_next')) {
         return NextResponse.next();
     }

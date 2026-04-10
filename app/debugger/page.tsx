@@ -12,12 +12,12 @@ export default function Debugger() {
         <div className='grid grid-cols-8 min-h-screen'>
             <div className={darkMode ? 'bg-[#0b0e14] col-span-1 border-r border-gray-800' : 'bg-[#fbfaf9]  col-span-1 border-r border-gray-800'}>
                 <div className='flex flex-col h-screen '>
-                    <div className='flex-1 '>
+                    <div className=''>
                         <div className='flex justify-evenly py-2 w-full px-2'>
                             <button className={darkMode ? 'w-full justify-center py-2 pl-4 border rounded-xl border-gray-800 text-sm font-bold text-left' : 'justify-center py-2 px-7 border rounded-xl border-transparent text-black'}>+ New Conversation</button>
                         </div>
                     </div>
-                    <div className={darkMode ? 'border-y border-gray-800 flex-17 pt-2 px-2' : 'border-y border-gray-800 flex-17 pt-2'}>
+                    <div className={darkMode ? 'flex-1 border-y border-gray-800 pt-2 px-2' : 'border-y border-gray-800 pt-2'}>
                         <div className={darkMode ? 'bg-[#1c212e] flex flex-row justify-center py-2 w-full border rounded-xl border-transparent gap-1 justify-start pl-4' : 'flex flex-row justify-center py-2 mx-4 border rounded-xl border-transparent text-black'}>
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
@@ -27,23 +27,23 @@ export default function Debugger() {
                             <p className='text-sm'>Session 1</p>
                         </div>
                     </div>
-                    <div className='flex-1'>
+                    <div>
                         <div className='flex justify-around py-3'>🦆 Duck Debugger</div>
                     </div>
                 </div>
             </div>
             <div className={darkMode ? 'bg-[#0f121a] col-span-7' : 'bg-[#faf9f7] col-span-7'}>
                 <div className='flex flex-col h-screen'>
-                    <div className={darkMode ? 'flex-1 border-b border-gray-800 flex justify-between  px-5' : 'flex-1 border-b border-gray-800 flex justify-between py-3  px-2 text-black'}>
+                    <div className={darkMode ? 'border-b border-gray-800 flex justify-between  px-5' : 'border-b border-gray-800 flex justify-between py-3  px-2 text-black'}>
                         <div className='content-center'>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                             </svg>
                         </div>
-                        <div className='content-center'>
+                        <div className='content-center flex'>
                             <button
                                 onClick={() => toggleTheme(!darkMode)}
-                                className="px-4 pt-2"
+                                className="px-4 py-4"
                             >
                                 {darkMode ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
@@ -56,9 +56,26 @@ export default function Debugger() {
 
                                 )}
                             </button>
+                            <button
+                                onClick={() => toggleTheme(!darkMode)}
+                                className="px-4 py-2 flex"
+                            ><div className='bg-gray-800 p-2 rounded-md'>
+                                {darkMode ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
+
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5 ">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+</svg>
+
+                                )}
+                                </div>
+                            </button>
                         </div>
                     </div>
-                    <div className={darkMode ? 'flex-1 border-b border-gray-800 flex justify-items-start gap-3 pl-5 py-4' : 'flex-1 border-b border-gray-800 flex justify-items-start gap-3'}>
+                    <div className={darkMode ? 'border-b border-gray-800 flex justify-items-start gap-3 pl-5 py-4' : 'border-b border-gray-800 flex justify-items-start gap-3'}>
                         <div className='flex-none'>
                             <p className='text-lg'>🦆</p>
                         </div>
@@ -67,8 +84,8 @@ export default function Debugger() {
                             <p className='text-sm'>Explain your problem — sometimes that's all it takes.</p>
                         </div>
                     </div>
-                    <div className={darkMode ? 'flex-14 border-b border-gray-800 min-w-full place-content-center' : 'flex-14 border-b border-gray-800'}>
-                        <div className='flex flex-col gap-4 min-w-full place-content-center items-center mb-15'>
+                    <div className={darkMode ? 'flex-1 border-b border-gray-800 min-w-full place-content-center' : 'border-b border-gray-800'}>
+                        <div className='flex flex-col gap-4 min-w-full place-content-center items-center mb-16'>
                             <div className='flex flex-col items-center gap-4'>
                                 <p className='text-6xl'>🦆</p>
                                 <p className='text-xl font-bold'>What's bugging you?</p>
@@ -77,7 +94,7 @@ export default function Debugger() {
                             <p className='text-center text-gray-500 text-sm w-full max-w-1/3'>Sometimes just explaining it to a rubber duck is enough. If not, hit "Get AI Help" for suggestions.</p>
                         </div>
                     </div>
-                    <div className={darkMode ? 'flex-3' : 'flex-3'}>
+                    <div>
                         <footer>
                             <div className=" w-full flex flex-col gap-2 items-center">
                                 <form action="#" method="POST" className="items-center my-1 min-w-1/2">
