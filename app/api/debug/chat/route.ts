@@ -1,15 +1,30 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { NextResponse } from 'next/server';
+import { pool } from '@/app/lib/db';
 
 const client = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
-})
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+    const cookies = req.headers.get('cookie');
+    const sessionToken = cookies?.split('session_token=')[1]?.split(';')[0];
     const { message } = body;
 
+    /* info inquiry for table row making */
+    const userId = await pool.query(
+      'SELECT user_id FROM sessions WHERE session_token = $1',
+      [sessionToken],
+    );
+
+    if (!userId.rows[0].user_id) {
+      return NextResponse.json({ error: 'The user is unauthorized.'}, { status: 401 })
+    }
+    /* info inquiry end */
+
+    /* get AI response */
     const response = await client.messages.create({
       model: 'claude-opus-4-6',
       max_tokens: 1024,
@@ -47,7 +62,7 @@ RESPONSE STRUCTURE
 - This section should create clarity, not resolution.
 
 Good example tone:
-"This sounds less like your data is randomly disappearing and more like you're running into how redirects handle request data."
+'This sounds less like your data is randomly disappearing and more like you're running into how redirects handle request data.'
 
 3. RESOURCE
 Provide ONE highly relevant documentation page, article, or guide.
@@ -62,13 +77,13 @@ When you read it, focus on:
 
 The resource should feel like a natural continuation of the reframed explanation.
 It should answer the user's likely next question:
-"Okay, if that's what's happening... where do I learn more?"
+'Okay, if that's what's happening... where do I learn more?'
 
 4. CLARIFICATION INVITE
 Invite them to drop any confusing word by itself.
 
 Example tone:
-"If any word in there feels vague — like \`middleware\` or \`closure\` — just drop it and I’ll translate."
+'If any word in there feels vague — like \`middleware\` or \`closure\` — just drop it and I’ll translate.'
 
 5. GUIDING QUESTIONS
 End with 1–3 short questions that help them think through their own case.
@@ -117,20 +132,36 @@ A great Duckling response makes the user feel:
 "I know what to investigate in my own code."
 "My panic level just dropped."
 `,
-      messages: [{ role: 'user', content: message }],
+      messages: [{ role: "user", content: message }],
     });
 
     const reply = response.content[0];
-    if (reply.type !== "text") {
-         return NextResponse.json({ error: 'Unexpected response type' }, { status: 500 });
+    if (reply.type !== 'text') {
+      return NextResponse.json(
+        { error: 'Unexpected response type' },
+        { status: 500 },
+      );
     }
+    /* AI response end */
 
+    /* table row making */
+    const id = await pool.query(
+      'INSERT INTO debugging_sessions (user_id, title) VALUES ($1, $2) RETURNING id',
+      [userId.rows[0].user_id, 'test'],
+    );
 
-    return NextResponse.json(
-        { response: reply.text },
-        { status: 200 }
-    )
+    await pool.query(
+      'INSERT INTO discussions (session_id, role, content) VALUES ($1, $2, $3)',
+      [id.rows[0].id, 'user', message],
+    );
 
+    await pool.query(
+      'INSERT INTO discussions (session_id, role, content) VALUES ($1, $2, $3)',
+      [id.rows[0].id, 'assistant', reply.text],
+    );
+    /* table row making end */
+
+    return NextResponse.json({ response: reply.text }, { status: 200 });
   } catch (err) {
     console.error('Duckling API error:', err);
     return NextResponse.json(
