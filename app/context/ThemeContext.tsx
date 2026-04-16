@@ -33,6 +33,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
         loadTheme();
     }, []);
 
+    useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode)
+}, [darkMode])
+
     const toggleTheme = async () => {
         const newMode = !darkMode;
         setDarkMode(newMode);
