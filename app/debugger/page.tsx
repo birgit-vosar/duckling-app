@@ -27,7 +27,7 @@ export default function Debugger() {
                 </div>
                 <div className='px-2'>
                   <div className='flex justify-evenly py-2 w-full px-2'>
-                    <button className='cursor-pointer w-full justify-center py-2 pl-4 border rounded-xl text-sm font-bold text-left text-zinc-700 border-gray-300 dark:border-gray-800 dark:text-white hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:hover:bg-blue-900 dark:hover:text-gray-200 dark:hover:border-blue-950 dark:active:bg-blue-700'>
+                    <button className='cursor-pointer w-full justify-center py-2 pl-4 border rounded-xl text-sm font-bold text-left text-zinc-700 border-gray-300 dark:border-gray-800 dark:text-white hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:hover:bg-blue-900 dark:hover:text-gray-200 dark:hover:border-blue-950 dark:active:bg-blue-700  transition duration-300'>
                       + New Conversation
                     </button>
                   </div>
@@ -80,8 +80,8 @@ export default function Debugger() {
                       />
                     </div>
                     <div className='flex flex-row gap-4 w-full justify-end my-2'>
-                      <button className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700'>Reflect / Guide</button>
-                      <button className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700'>Submit</button>
+                      <button className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300'>Reflect / Guide</button>
+                      <button className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300'>Submit</button>
                     </div>
                   </div>
                 </div>
