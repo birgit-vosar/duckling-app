@@ -8,11 +8,11 @@ export default function Debugger() {
   const { toggleTheme, darkMode } = useTheme()
 
   return (
-    <div className='grid grid-cols-8 min-h-screen'>
+    <div className='flex flex-row min-h-screen'>
 
       <Nav />
 
-      <div className='bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white col-span-7'>
+      <div className='bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white flex-1'>
         <div className='flex flex-col h-screen'>
           <TopBar />
 

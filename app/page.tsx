@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function Home() {
   const router = useRouter();
@@ -26,12 +27,19 @@ export default function Home() {
       <div className="text-center">
         <h1 className="text-2xl mb-4">🦆 welcome to duckling</h1>
         <p className="mb-6">you're logged in!</p>
-        <button 
-          onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
-        >
-          logout
-        </button>
+        <div className='flex flex-row gap-4 justify-center'>
+          <Link href='/dashboard'
+            className="bg-[#2d4583] hover:bg-blue-700 text-white px-4 py-2 rounded"
+          >
+            Dashboard
+          </Link>
+          <button
+            onClick={handleLogout}
+            className="hover:bg-red-600 text-white px-4 py-2 rounded border border-gray-500"
+          >
+            logout
+          </button>
+        </div>
       </div>
     </div>
   )
