@@ -1,18 +1,23 @@
 'use client'
 
 import { useTheme } from "../context/ThemeContext"
-import { useNav } from "../context/NavContext"
+import { useNav} from "../context/NavContext"
 
 export default function TopBar() {
     const { toggleTheme } = useTheme()
-    const { toggleNav } = useNav()
+    const { toggleNav, toggleMobileNav } = useNav()
 
     return (
         <div className='bg-zinc-100 border-b border-gray-300 dark:border-[#182543] dark:bg-[#0f121a] flex justify-between px-5'>
-            <div className='cursor-pointer content-center hover:scale-110 transition duration-200'>
-                <button onClick={toggleNav}>
+            <div className='cursor-pointer content-center hover:scale-110 transition duration-200 py-4'>
+                <button onClick={toggleNav} className='cursor-pointer hidden md:block'>
                     <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='size-5'>
                         <path strokeLinecap='round' strokeLinejoin='round' d='M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15' />
+                    </svg>
+                </button>
+                <button onClick={toggleMobileNav} className='cursor-pointer md:hidden'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </button>
             </div>

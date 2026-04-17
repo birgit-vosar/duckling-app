@@ -1,17 +1,18 @@
 'use client'
 
-import { useTheme } from '../context/ThemeContext'
+import { useNav } from '../context/NavContext'
 import Nav from '../components/Nav'
 import TopBar from '../components/TopBar'
 import Card from '../components/Card'
 
 export default function () {
-    const { toggleTheme, darkMode } = useTheme()
+    const { mobileMenu, toggleMobileNav } = useNav()
 
     return (
-        <div className='grid grid-cols-8 min-h-screen'>
+        <div className='flex flex-row min-h-screen'>
             <Nav />
-            <div className='col-span-7 bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white h-full'>
+            { mobileMenu ? ( <div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav}/>) : (<div className='md:hidden'/>)}
+            <div className={`flex-1 bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white h-full`}>
                 <div className='flex flex-col h-screen'>
                     <TopBar />
                     {/* main */}

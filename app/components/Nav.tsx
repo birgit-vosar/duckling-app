@@ -6,7 +6,7 @@ import { useNav } from '../context/NavContext';
 
 export default function Nav() {
     const pathname = usePathname()
-    const { menuState } = useNav()
+    const { menuState, mobileMenu } = useNav()
 
     const navItems = [
         {
@@ -43,54 +43,31 @@ export default function Nav() {
 
     return (
         <div>
-            <div className='flex flex-col h-screen bg-zinc-100 border-r border-gray-300 dark:border-gray-800 dark:bg-[#0f121a] text-black dark:text-white'>
-                {menuState ? (<div className='w-55'>
-                    <Link href='/dashboard' className='flex pl-4 py-3 gap-2'>
-                        <p className='text-3xl'>🦆</p>
+            <div className={`${mobileMenu ? 'fixed top-0 left-0 w-70 h-full z-50' : 'hidden md:flex'} md:relative md:block flex flex-col h-screen overflow-hidden bg-zinc-100 border-r border-gray-300 dark:border-gray-800 dark:bg-[#0f121a] text-black dark:text-white ${menuState ? 'w-56' : 'w-16'}`}>
+
+                <Link href='/dashboard' className='flex pl-4 py-3 gap-2'>
+                    <p className='text-3xl'>🦆</p>
+                    {menuState && (
                         <div className='flex flex-col'>
                             <p className='font-semibold text-zinc-800 dark:text-white'>duckling.dev</p>
                             <p className='text-xs text-gray-500'>Productivity Hub</p>
                         </div>
-                    </Link>
-                    <div className='flex-1 pt-2 px-2'>
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className={`cursor-pointer items-center flex flex-row py-2 w-full rounded-xl gap-3 pl-4 text-sm active:opacity-50 
-              ${pathname === item.href
-                                        ? 'bg-gray-200 text-zinc-700 hover:bg-[#D2EAF1] hover:text-gray-700 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:text-white dark:hover:text-white'
-                                        : 'text-gray-400 hover:bg-[#D2EAF1] hover:text-gray-700 dark:hover:bg-blue-900 dark:hover:text-gray-200 transition duration-300'
-                                    }`}
-                            >
-                                {item.icon}
-                                {item.label}
-                            </Link>
-                        ))}
-                    </div>
+                    )}
+                </Link>
 
-                </div>) : (<div>
-                    <Link href='/dashboard' className='flex pl-4 pr-2 py-3 gap-2'>
-                        <p className='text-3xl'>🦆</p>
-                    </Link>
-                    <div className='flex-1 pt-2 px-2'>
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className={`cursor-pointer items-center flex flex-row py-2 w-full rounded-xl gap-3 pl-4 text-sm active:opacity-50 
+                <div className='flex-1 pt-2 px-2'>
+                    {navItems.map((item) => (
+                        <Link key={item.href} href={item.href} className={`cursor-pointer items-center flex flex-row py-2 w-full rounded-xl gap-3 pl-4 text-sm active:opacity-50 
               ${pathname === item.href
-                                        ? 'bg-gray-200 text-zinc-700 hover:bg-[#D2EAF1] hover:text-gray-700 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:text-white dark:hover:text-white'
-                                        : 'text-gray-400 hover:bg-[#D2EAF1] hover:text-gray-700 dark:hover:bg-blue-900 dark:hover:text-gray-200 transition duration-300'
-                                    }`}
-                            >
-                                {item.icon}
-                            </Link>
-                        ))}
-                    </div>
+                                ? 'bg-gray-200 text-zinc-700 hover:bg-[#D2EAF1] hover:text-gray-700 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:text-white dark:hover:text-white'
+                                : 'text-gray-400 hover:bg-[#D2EAF1] hover:text-gray-700 dark:hover:bg-blue-900 dark:hover:text-gray-200 transition duration-300'
+                            }`}>
+                            {item.icon}
+                            {menuState && item.label}
+                        </Link>
+                    ))}
+                </div>
 
-                </div>)
-                }
             </div>
         </div>
     )

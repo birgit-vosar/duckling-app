@@ -5,19 +5,26 @@ import { createContext, useContext, ReactNode, useState } from "react"
 type NavContextType = {
     menuState: boolean;
     toggleNav: () => void;
+    mobileMenu: boolean;
+    toggleMobileNav: () => void;
 }
 
 const NavContext = createContext<NavContextType | undefined>(undefined);
 
 export function NavProvider({ children }: { children: ReactNode }) {
     const [menuState, setMenuState] = useState(true);
+    const [mobileMenu, setMobileMenu] = useState(false)
 
     const toggleNav = () => {
         setMenuState(!menuState);
     }
 
+    const toggleMobileNav = () => {
+        setMobileMenu(!mobileMenu);
+    }
+
     return (
-        <NavContext.Provider value={{ menuState, toggleNav }}>
+        <NavContext.Provider value={{ menuState, toggleNav, mobileMenu, toggleMobileNav }}>
             { children }
         </NavContext.Provider>
     )

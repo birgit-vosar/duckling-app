@@ -1,16 +1,16 @@
 'use client'
 
-import { useTheme } from '../context/ThemeContext'
+import { useNav } from '../context/NavContext'
 import Nav from '../components/Nav'
 import TopBar from '../components/TopBar'
 
-export default function Debugger() {
-  const { toggleTheme, darkMode } = useTheme()
+export default function () {
+    const { mobileMenu, toggleMobileNav } = useNav()
 
-  return (
-    <div className='flex flex-row min-h-screen'>
-
-      <Nav />
+    return (
+        <div className='flex flex-row min-h-screen'>
+            <Nav />
+            { mobileMenu ? ( <div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav}/>) : (<div className='md:hidden'/>)}
 
       <div className='bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white flex-1'>
         <div className='flex flex-col h-screen'>
