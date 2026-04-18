@@ -24,9 +24,9 @@ export async function POST(req: Request) {
     }
     /* info inquiry end */
 
-    /* get AI response */
+    /* AI char and response */
     const response = await client.messages.create({
-      model: 'claude-opus-4-6',
+      model: 'claude-haiku-4-5-20251001',
       max_tokens: 1024,
       system: `You are Duckling, a witty rubber duck debugger for developers.
 
@@ -142,7 +142,7 @@ A great Duckling response makes the user feel:
         { status: 500 },
       );
     }
-    /* AI response end */
+    /* AI char and response end */
 
     /* table row making */
     const id = await pool.query(

@@ -3,22 +3,55 @@
 import { useNav } from '../context/NavContext'
 import Nav from '../components/Nav'
 import TopBar from '../components/TopBar'
+import { useState } from 'react'
 
 export default function () {
-    const { mobileMenu, toggleMobileNav } = useNav()
+  const { mobileMenu, toggleMobileNav } = useNav()
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
-    return (
-        <div className='flex flex-row min-h-screen'>
-            <Nav />
-            { mobileMenu ? ( <div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav}/>) : (<div className='md:hidden'/>)}
+  async function handleSubmit() {
+
+    if (!message) {
+      setError('Please describe your problem first');
+      return;
+    }
+
+    try {
+
+      const response = await fetch('/api/debug/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      })
+      
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || 'submitting text to endpoint failed');
+        return;
+      }
+
+      console.log(data);
+
+    } catch (err) {
+      console.log('Textarea error', err);
+      setError('Something went wrong with submitting text.')
+    }
+
+  }
+
+  return (
+    <div className='flex flex-row min-h-screen'>
+      <Nav />
+      {mobileMenu ? (<div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav} />) : (<div className='md:hidden' />)}
 
       <div className='bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white flex-1'>
         <div className='flex flex-col h-screen'>
           <TopBar />
-
           {/* main content */}
           <div className='grid grid-cols-12 h-full'>
-
             {/* sessions sidebar */}
             <div className='col-span-2 border-r border-gray-300 dark:border-[#182543]'>
               <div className='flex flex-col'>
@@ -66,22 +99,24 @@ export default function () {
                 </div>
               </div>
 
-              <div className='flex-none'>
+              <div className='flex-none bg-zinc-100 dark:bg-[#0b111e]'>
                 <div className='w-full flex flex-col gap-2 items-center'>
                   <div className='items-center my-1 min-w-1/2 w-1/2'>
                     <div className='mt-2.5'>
                       <textarea
                         id='message'
                         name='message'
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
                         rows={4}
                         className='block w-full rounded-md px-3.5 py-2 text-sm border-2 focus:outline-2 focus:-outline-offset-2
-                          bg-transparent text-gray-800 border-gray-300 placeholder:text-zinc-400 focus:outline-gray-400
-                          dark:bg-white/5 dark:text-white dark:border-gray-800 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500'
+                          bg-white dark:bg-transparent text-gray-800 border-gray-200 placeholder:text-zinc-400 focus:outline-gray-400
+                           dark:text-white dark:border-gray-800 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500'
                       />
                     </div>
                     <div className='flex flex-row gap-4 w-full justify-end my-2'>
                       <button className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300'>Reflect / Guide</button>
-                      <button className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300'>Submit</button>
+                      <button onClick={handleSubmit} className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300'>Submit</button>
                     </div>
                   </div>
                 </div>
