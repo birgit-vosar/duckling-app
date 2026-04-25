@@ -11,33 +11,30 @@ export default function () {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [mode, setMode] = useState<'Explore' | 'Reflect'>('Reflect');
 
   const [pageText, setPageText] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
 
 
   async function handleSubmit() {
-        if (!message) {
+    if (!message) {
       setError('Please describe your problem first');
       return;
     }
-
     setPageText(prev =>
       [
         ...prev,
         { content: message, role: 'user' }
       ]
     )
-
     setIsLoading(true);
     setMessage('');
 
-
     try {
-
       const response = await fetch('/api/debug/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message })
+        body: JSON.stringify({ message, mode })
       })
       const data = await response.json();
 
@@ -162,7 +159,7 @@ export default function () {
                       />
                     </div>
                     <div className='flex flex-row gap-4 w-full justify-end my-2'>
-                      <button className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300'>Reflect / Guide</button>
+                      <button onClick={() => { setMode(mode === 'Explore' ? 'Reflect' : 'Explore') }} className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-500'>{mode === 'Explore' ? 'Explore' : 'Reflect' }</button>
                       <button onClick={handleSubmit} className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300'>Submit</button>
                     </div>
                   </div>
