@@ -160,7 +160,7 @@ A great Duckling response makes the user feel:
       [id.rows[0].id, 'assistant', reply.text],
     );
     /* table row making end */
-
+    
     return NextResponse.json({ response: reply.text }, { status: 200 });
   } catch (err) {
     console.error('Duckling API error:', err);

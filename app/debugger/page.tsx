@@ -4,18 +4,33 @@ import { useNav } from '../context/NavContext'
 import Nav from '../components/Nav'
 import TopBar from '../components/TopBar'
 import { useState } from 'react'
+import DebuggerLoading from '../components/DebuggerLoading'
 
 export default function () {
-  const { mobileMenu, toggleMobileNav } = useNav()
+  const { mobileMenu, toggleMobileNav } = useNav();
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [pageText, setPageText] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
+
 
   async function handleSubmit() {
-
-    if (!message) {
+        if (!message) {
       setError('Please describe your problem first');
       return;
     }
+
+    setPageText(prev =>
+      [
+        ...prev,
+        { content: message, role: 'user' }
+      ]
+    )
+
+    setIsLoading(true);
+    setMessage('');
+
 
     try {
 
@@ -24,8 +39,6 @@ export default function () {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message })
       })
-      
-
       const data = await response.json();
 
       if (!response.ok) {
@@ -33,7 +46,14 @@ export default function () {
         return;
       }
 
-      console.log(data);
+      setPageText(prev =>
+        [
+          ...prev,
+          { content: data.response, role: 'assistant' }
+        ]
+      )
+
+      setIsLoading(false);
 
     } catch (err) {
       console.log('Textarea error', err);
@@ -88,15 +108,41 @@ export default function () {
                 </div>
               </div>
 
-              <div className='flex-1 border-b border-gray-300 dark:border-[#182543] min-w-full place-content-center'>
-                <div className='flex flex-col gap-4 min-w-full place-content-center items-center mb-16'>
-                  <div className='flex flex-col items-center gap-4'>
-                    <p className='text-6xl'>🦆</p>
-                    <p className='text-xl font-bold'>What's bugging you?</p>
-                  </div>
-                  <p className='text-center text-gray-500 text-sm w-full max-w-1/3'>Describe your coding problem below. What are you trying to do? What's happening instead? What have you tried so far?</p>
-                  <p className='text-center text-gray-500 text-sm w-full max-w-1/3'>Sometimes just explaining it to a rubber duck is enough. If not, hit 'Get AI Help' for suggestions.</p>
-                </div>
+              <div className='flex-1 border-b border-gray-300 dark:border-[#182543] min-w-full px-92 place-content-center'>
+
+                {pageText.length === 0 ?
+                  (
+                    <div className='flex flex-col gap-4 min-w-full place-content-center items-center mb-16'><div className='flex flex-col items-center gap-4'>
+                      <p className='text-6xl'>🦆</p>
+                      <p className='text-xl font-bold'>What's bugging you?</p>
+                    </div>
+                      <p className='text-center text-gray-500 text-sm w-full max-w-2/3'>Describe your coding problem below. What are you trying to do? What's happening instead? What have you tried so far?</p>
+                      <p className='text-center text-gray-500 text-sm w-full max-w-2/3'>Sometimes just explaining it to a rubber duck is enough. If not, hit 'Get AI Help' for suggestions.</p></div>
+                  ) :
+                  (
+                    <div className='min-w-full flex flex-col w-full h-full justify-end overflow-hidden text-sm' id='page-text-div'>
+                      {pageText.map((text, index) => (
+                        (text.role === 'user' ?
+                          (
+                            <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-800 w-fit max-w-md place-self-end border rounded-md dark:border-transparent'>
+                              <div className='w-fit'>{text.content}</div>
+                            </div>
+                          ) :
+                          (
+                            <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-900 border rounded-md dark:border-[#182543] w-fit max-w-md'>
+                              <div className='w-fit'>{text.content}</div>
+                            </div>
+                          )
+                        )
+                      ))}
+                      {isLoading && (
+                        <div className='mb-6 flex justify-start'>
+                          <DebuggerLoading />
+                        </div>
+                      )}
+                    </div>
+                  )}
+
               </div>
 
               <div className='flex-none bg-zinc-100 dark:bg-[#0b111e]'>
@@ -108,6 +154,7 @@ export default function () {
                         name='message'
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
+                        placeholder={'Whats the bug?'}
                         rows={4}
                         className='block w-full rounded-md px-3.5 py-2 text-sm border-2 focus:outline-2 focus:-outline-offset-2
                           bg-white dark:bg-transparent text-gray-800 border-gray-200 placeholder:text-zinc-400 focus:outline-gray-400
