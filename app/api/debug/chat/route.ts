@@ -184,7 +184,7 @@ Good example tone:
 'This sounds less like your data is randomly disappearing and more like you're running into how redirects handle request data.'
 
 3. RESOURCE
-Provide ONE highly relevant documentation page, article, or guide.
+Provide THREE highly relevant documentation page, article, or guide.
 
 Format exactly:
 
@@ -267,6 +267,8 @@ A great Duckling response makes the user feel:
         { status: 500 },
       );
     }
+
+    console.log('this is server side response: ', reply);
     /* AI char and response end */
 
     /* table row making */

@@ -1,10 +1,11 @@
 'use client'
 
-import { useNav } from '../context/NavContext'
-import Nav from '../components/Nav'
-import TopBar from '../components/TopBar'
-import { useState } from 'react'
-import DebuggerLoading from '../components/DebuggerLoading'
+import { useNav } from '../context/NavContext';
+import Nav from '../components/Nav';
+import TopBar from '../components/TopBar';
+import { useState, useEffect, useRef } from 'react';
+import DebuggerLoading from '../components/DebuggerLoading';
+import ReactMarkDown from 'react-markdown';
 
 export default function () {
   const { mobileMenu, toggleMobileNav } = useNav();
@@ -12,9 +13,13 @@ export default function () {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'Explore' | 'Reflect'>('Reflect');
-
+const bottomRef = useRef<HTMLDivElement>(null);
   const [pageText, setPageText] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
 
+
+  useEffect(() => {
+  bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+}, [pageText, isLoading]);
 
   async function handleSubmit() {
     if (!message) {
@@ -37,6 +42,8 @@ export default function () {
         body: JSON.stringify({ message, mode })
       })
       const data = await response.json();
+            
+      
 
       if (!response.ok) {
         setError(data.error || 'submitting text to endpoint failed');
@@ -51,6 +58,8 @@ export default function () {
       )
 
       setIsLoading(false);
+
+console.log('this is client side response: ', data);
 
     } catch (err) {
       console.log('Textarea error', err);
@@ -68,7 +77,7 @@ export default function () {
         <div className='flex flex-col h-screen'>
           <TopBar />
           {/* main content */}
-          <div className='grid grid-cols-12 h-full'>
+          <div className='grid grid-cols-12 h-full min-h-0'>
             {/* sessions sidebar */}
             <div className='col-span-2 border-r border-gray-300 dark:border-[#182543]'>
               <div className='flex flex-col'>
@@ -94,7 +103,7 @@ export default function () {
             </div>
 
             {/* chat area */}
-            <div className='col-span-10 flex flex-col h-full'>
+            <div className='col-span-10 flex flex-col h-full min-h-0'>
               <div className='flex-none border-b border-gray-300 dark:border-[#182543] flex justify-items-start gap-3 pl-5 py-4'>
                 <div className='flex-none'>
                   <p className='text-lg'>🦆</p>
@@ -105,7 +114,7 @@ export default function () {
                 </div>
               </div>
 
-              <div className='flex-1 border-b border-gray-300 dark:border-[#182543] min-w-full px-92 place-content-center'>
+              <div className='flex-1 min-h-0 overflow-y-auto border-b border-gray-300 dark:border-[#182543] min-w-full px-92'>
 
                 {pageText.length === 0 ?
                   (
@@ -117,17 +126,17 @@ export default function () {
                       <p className='text-center text-gray-500 text-sm w-full max-w-2/3'>Sometimes just explaining it to a rubber duck is enough. If not, hit 'Get AI Help' for suggestions.</p></div>
                   ) :
                   (
-                    <div className='min-w-full flex flex-col w-full h-full justify-end overflow-hidden text-sm' id='page-text-div'>
+                    <div className='flex flex-col justify-end min-h-full w-full text-sm' id='page-text-div'>
                       {pageText.map((text, index) => (
                         (text.role === 'user' ?
                           (
                             <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-800 w-fit max-w-md place-self-end border rounded-md dark:border-transparent'>
-                              <div className='w-fit'>{text.content}</div>
+                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkDown>{text.content}</ReactMarkDown></div>
                             </div>
                           ) :
                           (
                             <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-900 border rounded-md dark:border-[#182543] w-fit max-w-md'>
-                              <div className='w-fit'>{text.content}</div>
+                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkDown>{text.content}</ReactMarkDown></div>
                             </div>
                           )
                         )
@@ -137,6 +146,7 @@ export default function () {
                           <DebuggerLoading />
                         </div>
                       )}
+                      <div ref={bottomRef} />
                     </div>
                   )}
 
