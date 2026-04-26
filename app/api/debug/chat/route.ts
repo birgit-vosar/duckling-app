@@ -267,8 +267,7 @@ A great Duckling response makes the user feel:
         { status: 500 },
       );
     }
-
-    console.log('this is server side response: ', reply);
+    
     /* AI char and response end */
 
     /* table row making */

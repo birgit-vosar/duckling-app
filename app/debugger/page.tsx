@@ -10,20 +10,24 @@ import ReactMarkDown from 'react-markdown';
 export default function () {
   const { mobileMenu, toggleMobileNav } = useNav();
   const [message, setMessage] = useState('');
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'Explore' | 'Reflect'>('Reflect');
-const bottomRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const [pageText, setPageText] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
 
 
   useEffect(() => {
-  bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-}, [pageText, isLoading]);
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [pageText, isLoading]);
+
+  useEffect(() => {
+    setTimeout(() => {setError(false)}, 500);
+  }, [error])
 
   async function handleSubmit() {
     if (!message) {
-      setError('Please describe your problem first');
+      setError(true);
       return;
     }
     setPageText(prev =>
@@ -42,8 +46,8 @@ const bottomRef = useRef<HTMLDivElement>(null);
         body: JSON.stringify({ message, mode })
       })
       const data = await response.json();
-            
-      
+
+
 
       if (!response.ok) {
         setError(data.error || 'submitting text to endpoint failed');
@@ -59,11 +63,11 @@ const bottomRef = useRef<HTMLDivElement>(null);
 
       setIsLoading(false);
 
-console.log('this is client side response: ', data);
+      setError(false);
 
     } catch (err) {
       console.log('Textarea error', err);
-      setError('Something went wrong with submitting text.')
+      alert('Something went wrong with submitting text.');
     }
 
   }
@@ -117,25 +121,26 @@ console.log('this is client side response: ', data);
               <div className='flex-1 min-h-0 overflow-y-auto border-b border-gray-300 dark:border-[#182543] min-w-full px-92'>
 
                 {pageText.length === 0 ?
-                  (
+                  (<div className='justify-center h-full'>
                     <div className='flex flex-col gap-4 min-w-full place-content-center items-center mb-16'><div className='flex flex-col items-center gap-4'>
                       <p className='text-6xl'>🦆</p>
                       <p className='text-xl font-bold'>What's bugging you?</p>
                     </div>
                       <p className='text-center text-gray-500 text-sm w-full max-w-2/3'>Describe your coding problem below. What are you trying to do? What's happening instead? What have you tried so far?</p>
                       <p className='text-center text-gray-500 text-sm w-full max-w-2/3'>Sometimes just explaining it to a rubber duck is enough. If not, hit 'Get AI Help' for suggestions.</p></div>
+                  </div>
                   ) :
                   (
                     <div className='flex flex-col justify-end min-h-full w-full text-sm' id='page-text-div'>
                       {pageText.map((text, index) => (
                         (text.role === 'user' ?
                           (
-                            <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-800 w-fit max-w-md place-self-end border rounded-md dark:border-transparent'>
+                            <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-800 bg-gray-200 border-transparent w-fit max-w-md place-self-end border rounded-md dark:border-transparent'>
                               <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkDown>{text.content}</ReactMarkDown></div>
                             </div>
                           ) :
                           (
-                            <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-900 border rounded-md dark:border-[#182543] w-fit max-w-md'>
+                            <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-900 bg-white border border-gray-200 rounded-md dark:border-[#182543] w-fit max-w-md'>
                               <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkDown>{text.content}</ReactMarkDown></div>
                             </div>
                           )
@@ -163,14 +168,14 @@ console.log('this is client side response: ', data);
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder={'Whats the bug?'}
                         rows={4}
-                        className='block w-full rounded-md px-3.5 py-2 text-sm border-2 focus:outline-2 focus:-outline-offset-2
+                        className={`block w-full rounded-md px-3.5 py-2 text-sm border-2 focus:outline-2 focus:-outline-offset-2
                           bg-white dark:bg-transparent text-gray-800 border-gray-200 placeholder:text-zinc-400 focus:outline-gray-400
-                           dark:text-white dark:border-gray-800 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500'
+                           dark:text-white dark:border-gray-800 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500 ${ error === true && 'border-red-300 dark:border-red-900'}`}
                       />
                     </div>
                     <div className='flex flex-row gap-4 w-full justify-end my-2'>
-                      <button onClick={() => { setMode(mode === 'Explore' ? 'Reflect' : 'Explore') }} className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-500'>{mode === 'Explore' ? 'Explore' : 'Reflect' }</button>
-                      <button onClick={handleSubmit} className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300'>Submit</button>
+                      <button onClick={() => { setMode(mode === 'Explore' ? 'Reflect' : 'Explore') }} className='cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-500'>{mode === 'Explore' ? 'Explore' : 'Reflect'}</button>
+                      <button onClick={handleSubmit} disabled={isLoading === true && true} className={`cursor-pointer border px-3 py-1 border-gray-500 rounded-lg text-sm hover:bg-[#D2EAF1] active:bg-[#bed7df] hover:text-zinc-700 hover:border-blue-100 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:hover:text-white dark:active:bg-blue-700 transition duration-300 `}>Submit</button>
                     </div>
                   </div>
                 </div>
