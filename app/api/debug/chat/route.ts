@@ -1,6 +1,7 @@
-import Anthropic from '@anthropic-ai/sdk';
-import { NextResponse } from 'next/server';
-import { pool } from '@/app/lib/db';
+import Anthropic from "@anthropic-ai/sdk";
+import { NextResponse } from "next/server";
+import { pool } from "@/app/lib/db";
+import { getSessionUser } from "@/app/lib/auth";
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
@@ -9,23 +10,18 @@ const client = new Anthropic({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const cookies = req.headers.get('cookie');
-    const sessionToken = cookies?.split('session_token=')[1]?.split(';')[0];
     const { message, mode } = body;
 
-    /* info inquiry for table row making */
-    const userId = await pool.query(
-      'SELECT user_id FROM sessions WHERE session_token = $1',
-      [sessionToken],
-    );
+    const user = await getSessionUser(req);
+    if (!user)
+      return NextResponse.json(
+        { error: "User is unauthorized" },
+        { status: 401 },
+      );
 
-    if (!userId.rows[0].user_id) {
-      return NextResponse.json({ error: 'The user is unauthorized.'}, { status: 401 })
-    }
-    /* info inquiry end */
-
-    const systemPrompt = mode === 'Reflect' ?  
-    `You are Duckling, a witty rubber duck debugger for developers. Your role in Reflection Mode is to help developers see their problem more clearly by reflecting it back in a structured, grounded way.
+    const systemPrompt =
+      mode === "Reflect"
+        ? `You are Duckling, a witty rubber duck debugger for developers. Your role in Reflection Mode is to help developers see their problem more clearly by reflecting it back in a structured, grounded way.
 
 You do NOT guide toward solutions.
 You do NOT suggest fixes.
@@ -146,8 +142,8 @@ A great reflection response makes the user feel:
 - "Wait… that’s actually what’s going on."
 - "I didn’t realize that mismatch was the issue."
 - "Okay, this is clearer now."
-- "I can think again."` : 
-    `You are Duckling, a witty rubber duck debugger for developers.
+- "I can think again."`
+        : `You are Duckling, a witty rubber duck debugger for developers.
 
 Your job is to help developers calm down, understand what kind of problem they are facing, and find the right learning resource for it.
 You are NOT primarily a solver — you are a thinking guide and translator.
@@ -250,48 +246,48 @@ A great Duckling response makes the user feel:
 "I know what to read next."
 "I know what to investigate in my own code."
 "My panic level just dropped."
-` ;
+`;
 
     /* AI char and response */
     const response = await client.messages.create({
-      model: 'claude-haiku-4-5-20251001',
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 1024,
       system: systemPrompt,
       messages: [{ role: "user", content: message }],
     });
 
     const reply = response.content[0];
-    if (reply.type !== 'text') {
+    if (reply.type !== "text") {
       return NextResponse.json(
-        { error: 'Unexpected response type' },
+        { error: "Unexpected response type" },
         { status: 500 },
       );
     }
-    
+
     /* AI char and response end */
 
     /* table row making */
     const id = await pool.query(
-      'INSERT INTO debugging_sessions (user_id, title) VALUES ($1, $2) RETURNING id',
-      [userId.rows[0].user_id, 'test'],
+      "INSERT INTO debugging_sessions (user_id, title) VALUES ($1, $2) RETURNING id",
+      [user.id, "test"],
     );
 
     await pool.query(
-      'INSERT INTO discussions (session_id, role, content) VALUES ($1, $2, $3)',
-      [id.rows[0].id, 'user', message],
+      "INSERT INTO discussions (session_id, role, content) VALUES ($1, $2, $3)",
+      [id.rows[0].id, "user", message],
     );
 
     await pool.query(
-      'INSERT INTO discussions (session_id, role, content) VALUES ($1, $2, $3)',
-      [id.rows[0].id, 'assistant', reply.text],
+      "INSERT INTO discussions (session_id, role, content) VALUES ($1, $2, $3)",
+      [id.rows[0].id, "assistant", reply.text],
     );
     /* table row making end */
-    
+
     return NextResponse.json({ response: reply.text }, { status: 200 });
   } catch (err) {
-    console.error('Duckling API error:', err);
+    console.error("Duckling API error:", err);
     return NextResponse.json(
-      { error: 'connection to API failed' },
+      { error: "connection to API failed" },
       { status: 500 },
     );
   }

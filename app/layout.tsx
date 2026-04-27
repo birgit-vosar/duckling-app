@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/app/context/ThemeContext";
 import "./globals.css";
 import { NavProvider } from "./context/NavContext";
+import { TimeTracker } from '@/app/components/TimeTracker'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,12 +25,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
+          <TimeTracker />
           <NavProvider>
             {children}
           </NavProvider>
