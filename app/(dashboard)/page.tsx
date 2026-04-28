@@ -1,12 +1,14 @@
 'use client'
 
-import { useNav } from '../context/NavContext'
-import Nav from '../components/Nav'
-import TopBar from '../components/TopBar'
-import Card from '../components/Card'
+import { useNav } from '@/app/context/NavContext';
+import Nav from '@/app/components/Nav';
+import TopBar from '@/app/components/TopBar';
+import Card from '@/app/components/Card';
+import { useTheme } from '@/app/context/ThemeContext';
 
 export default function () {
-    const { mobileMenu, toggleMobileNav } = useNav()
+    const { mobileMenu, toggleMobileNav } = useNav();
+    const { darkMode } = useTheme();
 
     return (
         <div className='flex flex-row min-h-screen'>
@@ -23,10 +25,10 @@ export default function () {
                                     <Card className='flex-1 px-2'>
                                         <div className='flex flex-row justify-between items-center px-4 py-6'>
                                             <div className='flex flex-col gap-2'>
-                                                <p className='text-xl font-semibold font-sans'>Welcome to dashboard!</p>
-                                                <p className='text-sm text-gray-600 dark:text-gray-400'>Keep up the great momentum 💪</p>
+                                                <p className='font-mono text-xl font-semibold'>Welcome to dashboard!</p>
+                                                <p className='text-sm text-gray-600 dark:text-gray-400'>Keep up the great momentum!</p>
                                             </div>
-                                            <div><p className='text-5xl'>🦆</p></div>
+                                            <div><img width={120} height={120} src={ darkMode ? '/assets/duck4.png' : '/assets/duck5.png' } className='mr-6'/></div>
                                         </div>
                                     </Card>
                                     <Card className='flex-4'>
@@ -85,3 +87,4 @@ export default function () {
         </div>
     )
 }
+

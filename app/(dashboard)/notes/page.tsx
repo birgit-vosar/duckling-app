@@ -1,8 +1,8 @@
 'use client'
 
-import { useNav } from '../context/NavContext'
-import Nav from '../components/Nav'
-import TopBar from '../components/TopBar'
+import { useNav } from '@/app/context/NavContext'
+import Nav from '@/app/components/Nav'
+import TopBar from '@/app/components/TopBar'
 
 export default function () {
     const { mobileMenu, toggleMobileNav } = useNav()
@@ -16,7 +16,7 @@ export default function () {
                     <TopBar />
                     {/* main */}
                     <div>
-                        <p className='ml-4 mt-4 text-lg'>This is calendar page.</p>
+                        <p className='ml-4 mt-4 text-lg'>This is notes page.</p>
                     </div>
                 </div>
             </div>

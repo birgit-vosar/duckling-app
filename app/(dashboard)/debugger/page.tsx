@@ -1,10 +1,10 @@
 'use client'
 
-import { useNav } from '../context/NavContext';
-import Nav from '../components/Nav';
-import TopBar from '../components/TopBar';
+import { useNav } from '@/app/context/NavContext';
+import Nav from '@/app/components/Nav';
+import TopBar from '@/app/components/TopBar';
 import { useState, useEffect, useRef } from 'react';
-import DebuggerLoading from '../components/DebuggerLoading';
+import DebuggerLoading from '@/app/components/DebuggerLoading';
 import ReactMarkDown from 'react-markdown';
 
 export default function () {

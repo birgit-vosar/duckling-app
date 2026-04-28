@@ -3,14 +3,16 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import { useNav } from '../context/NavContext';
+import { useTheme } from '../context/ThemeContext';
 
 export default function Nav() {
-    const pathname = usePathname()
-    const { menuState, mobileMenu } = useNav()
+    const pathname = usePathname();
+    const { menuState, mobileMenu } = useNav();
+    const { darkMode } = useTheme();
 
     const navItems = [
         {
-            label: 'Dashboard', href: '/dashboard', icon: (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-4">
+            label: 'Dashboard', href: '/', icon: (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="size-4">
                 <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
             </svg>)
         },
@@ -45,10 +47,10 @@ export default function Nav() {
         <div>
             <div className={`${mobileMenu ? 'fixed top-0 left-0 w-70 h-full z-50' : 'hidden md:flex'} md:relative md:block flex flex-col h-screen overflow-hidden bg-zinc-100 border-r border-gray-300 dark:border-gray-800 dark:bg-[#0f121a] text-black dark:text-white ${menuState ? 'w-56' : 'w-16'}`}>
 
-                <Link href='/dashboard' className='flex pl-4 py-3 gap-2'>
-                    <p className='text-3xl'>🦆</p>
+                <Link href='/' className='flex pl-4 py-3 gap-2'>
+                    <img width={50} height={50} src={ darkMode ? '/assets/duck4.png' : '/assets/duck5.png' }/>
                     {menuState && (
-                        <div className='flex flex-col'>
+                        <div className='flex flex-col mt-1'>
                             <p className='font-semibold text-zinc-800 dark:text-white'>duckling.dev</p>
                             <p className='text-xs text-gray-500'>Productivity Hub</p>
                         </div>

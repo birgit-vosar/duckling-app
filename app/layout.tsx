@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/app/context/ThemeContext";
-import "./globals.css";
-import { NavProvider } from "./context/NavContext";
+import '@/app/globals.css';
 import { TimeTracker } from '@/app/components/TimeTracker'
 
 const geistSans = Geist({
@@ -32,10 +31,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-          <TimeTracker />
-          <NavProvider>
             {children}
-          </NavProvider>
         </ThemeProvider>
       </body>
     </html>
