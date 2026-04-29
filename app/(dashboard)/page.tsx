@@ -5,6 +5,7 @@ import Nav from '@/app/components/Nav';
 import TopBar from '@/app/components/TopBar';
 import Card from '@/app/components/Card';
 import { useTheme } from '@/app/context/ThemeContext';
+import { Duck } from '@/app/components/Duck';
 
 export default function () {
     const { mobileMenu, toggleMobileNav } = useNav();

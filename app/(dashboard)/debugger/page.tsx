@@ -121,7 +121,7 @@ export default function () {
               <div className='flex-1 min-h-0 overflow-y-auto border-b border-gray-300 dark:border-[#182543] min-w-full px-92'>
 
                 {pageText.length === 0 ?
-                  (<div className='justify-center h-full'>
+                  (<div className='justify-center h-full md:mt-60'>
                     <div className='flex flex-col gap-4 min-w-full place-content-center items-center mb-16'><div className='flex flex-col items-center gap-4'>
                       <p className='text-6xl'>🦆</p>
                       <p className='text-xl font-bold'>What's bugging you?</p>
