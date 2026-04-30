@@ -6,6 +6,7 @@ import TopBar from '@/app/components/TopBar';
 import Card from '@/app/components/Card';
 import { useTheme } from '@/app/context/ThemeContext';
 import { Duck } from '@/app/components/Duck';
+import { SkinReward } from '@/app/components/SkinReward';
 
 export default function () {
     const { mobileMenu, toggleMobileNav } = useNav();
@@ -74,9 +75,9 @@ export default function () {
                                             <p className='text-sm'>This pomodoro feature is currently in development</p>
                                         </div>
                                     </Card>
-                                    <Card className='flex-1 mb-30' >
+                                    <Card className='flex-1 mb-30 dark:text-gray-400 text-sm' >
                                         <div className='p-6'>
-                                            <p className='text-sm'>This pomodoro feature is currently in development</p>
+                                            <SkinReward />
                                         </div>
                                     </Card>
                                 </div>
