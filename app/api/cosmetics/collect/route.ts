@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 import { pool } from '@/app/lib/db';
-import { getSessionUser } from "@/app/lib/auth";
+import { getSessionUser } from '@/app/lib/auth';
 
 
 export async function POST(req: Request) {
