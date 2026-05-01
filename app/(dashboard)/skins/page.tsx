@@ -66,8 +66,8 @@ export default function () {
                         </div>
                         <div className='flex mx-6 gap-4 '>
                             {allSkins.map((skin, index) => (
-                                <div className='group min-w-1/8'>
-                                <div key={index} className='transition duration-300 group-hover:scale-98 flex flex-col items-center dark:bg-[#0e1525] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
+                                <div key={index} className='group min-w-1/8'>
+                                <div className='transition duration-300 group-hover:scale-98 flex flex-col items-center dark:bg-[#0e1525] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
                                     <img className='transition duration-300 ease-in-out group-hover:scale-125 object-contain' width={50} height={50} src={`/assets/${skin}-sm.png`} />
                                     <p className='text-white text-sm font-semibold'>Lorem ipsum</p>
                                     <p className='text-xs text-white dark:text-gray-400'>Not equipped</p>
