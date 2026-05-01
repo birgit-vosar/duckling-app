@@ -16,8 +16,8 @@ export async function POST(req: Request) {
   );
 
   const newTotal: number = result.rows[0].total_minutes;
-  const isTreshhold = newTotal % 10 === 0 && newTotal <= 120;
-  const newSkin = isTreshhold ? `skin_${newTotal / 10 + 1}` : null;
+  const isTreshhold = newTotal % 30 === 0 && newTotal <= 120;
+  const newSkin = isTreshhold ? `skin_${newTotal / 30 + 1}` : null;
 
   if (newSkin) {
     await pool.query(

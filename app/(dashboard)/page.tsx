@@ -5,17 +5,30 @@ import Nav from '@/app/components/Nav';
 import TopBar from '@/app/components/TopBar';
 import Card from '@/app/components/Card';
 import { useTheme } from '@/app/context/ThemeContext';
+import { useEffect, useState } from 'react';
 import { Duck } from '@/app/components/Duck';
 import { SkinReward } from '@/app/components/SkinReward';
 
 export default function () {
     const { mobileMenu, toggleMobileNav } = useNav();
     const { darkMode } = useTheme();
+    const [equippedSkin, setEquippedSkin] = useState('default');
+
+    useEffect(() => {
+            fetch('/api/cosmetics/equipped', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setEquippedSkin(data.equippedSkin);
+                });
+        }, []);
 
     return (
         <div className='flex flex-row min-h-screen'>
             <Nav />
-            { mobileMenu ? ( <div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav}/>) : (<div className='md:hidden'/>)}
+            {mobileMenu ? (<div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav} />) : (<div className='md:hidden' />)}
             <div className={`flex-1 bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white h-full`}>
                 <div className='flex flex-col h-screen'>
                     <TopBar />
@@ -30,7 +43,10 @@ export default function () {
                                                 <p className='font-mono text-xl font-semibold'>Welcome to dashboard!</p>
                                                 <p className='text-sm text-gray-600 dark:text-gray-400'>Keep up the great momentum!</p>
                                             </div>
-                                            <div><img width={120} height={120} src={ darkMode ? '/assets/duck4.png' : '/assets/duck5.png' } className='mr-6'/></div>
+                                            <div className='relative w-[120px] h-[120px] mr-6'>
+                                                <img className='object-contain' src={darkMode ? '/assets/duck4.png' : '/assets/duck5.png'} />
+                                                <img className='object-contain absolute inset-0 -translate-y-4' src={`/assets/${equippedSkin}.png`} />
+                                            </div>
                                         </div>
                                     </Card>
                                     <Card className='flex-4'>
@@ -75,8 +91,8 @@ export default function () {
                                             <p className='text-sm'>This pomodoro feature is currently in development</p>
                                         </div>
                                     </Card>
-                                    <Card className='flex-1 mb-30 dark:text-gray-400 text-sm' >
-                                        <div className='p-6'>
+                                    <Card className='group flex-1 mb-30 dark:text-gray-400 text-sm' >
+                                        <div className='p-6 dark:group-hover:text-slate-200'>
                                             <SkinReward />
                                         </div>
                                     </Card>

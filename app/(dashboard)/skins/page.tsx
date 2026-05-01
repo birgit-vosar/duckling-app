@@ -13,6 +13,7 @@ export default function () {
     const [equippedSkin, setEquippedSkin] = useState('default');
     const [totalAmount, setTotalAmount] = useState(0);
     const [allSkins, setAllSkins] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch('/api/cosmetics/equipped', {
@@ -22,6 +23,7 @@ export default function () {
             .then(res => res.json())
             .then(data => {
                 setEquippedSkin(data.equippedSkin);
+                setLoading(false);
             });
     }, []);
 
@@ -34,6 +36,7 @@ export default function () {
             .then(data => {
                 setTotalAmount(data.totalAmount);
                 setAllSkins(data.allSkins);
+                setLoading(false);
             });
     }, []);
 
@@ -48,11 +51,13 @@ export default function () {
                     <div className='flex flex-col'>
                         <div className='flex dark:bg-[#0e1525] border border-gray-300 rounded-md dark:border-gray-800 m-6 gap-4 h-full p-4'>
                             <div className='relative w-[120px] h-[120px] mt-2'>
-                                <img className='object-contain' src={darkMode ? '/assets/duck4.png' : '/assets/duck5.png'} />
-                                <img className='object-contain absolute inset-0 -translate-y-4' src={`/assets/${equippedSkin}.png`} />
+                                {loading ? (<div className='flex items-center justify-center mt-8'>
+                                    <div className='w-8 h-8 border-4 border-gray-300 border-t-transparent rounded-full animate-spin'></div>
+                                </div>) : (<><img className='object-contain' src={darkMode ? '/assets/duck4.png' : '/assets/duck5.png'} />
+                                    <img className='object-contain absolute inset-0 -translate-y-4' src={`/assets/${equippedSkin}.png`} /></>)}
                             </div>
                             <div className='h-full content-center'>
-                                <p className='dark:text-gray-600 text-xs uppercase'>Currently equipped</p>
+                                <p className='text-gray-500 dark:text-gray-600 text-xs uppercase'>Currently equipped</p>
                                 <p className='dark:text-gray-400 text-mg font-semibold pt-1'>Wizard hat</p>
                                 <p className='text-sm dark:text-gray-400'>Common</p>
                             </div>
@@ -67,10 +72,10 @@ export default function () {
                         <div className='flex mx-6 gap-4 '>
                             {allSkins.map((skin, index) => (
                                 <div key={index} className='group min-w-1/8'>
-                                    <div className='transition duration-300 group-hover:scale-98 flex flex-col items-center dark:bg-[#0e1525] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
+                                    <div className='transition duration-300 min-h-40 group-hover:scale-98 flex flex-col items-center justify-center dark:bg-[#0e1525] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
                                         <img className='transition duration-300 ease-in-out group-hover:scale-125 object-contain' width={50} height={50} src={`/assets/${skin}-sm.png`} />
-                                        <p className='text-white text-sm font-semibold'>Lorem ipsum</p>
-                                        <p className='text-xs text-white dark:text-gray-400'>Not equipped</p>
+                                        <p className='dark:text-white text-sm font-semibold'>Lorem ipsum</p>
+                                        <p className='text-xs dark:text-gray-400 text-gray-500'>Not equipped</p>
                                     </div>
                                 </div>
                             ))}
