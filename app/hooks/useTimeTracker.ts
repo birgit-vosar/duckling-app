@@ -1,17 +1,36 @@
-'use client'
+'use client';
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react';
 
 export function useTimeTracker() {
-    useEffect(() => {
-        const interval = setInterval(async() => {
-            try {
-                await fetch('/api/user/update-time', { method: 'POST' });
-            } catch (err) {
-                console.error('Time update failed:', err);
-            }
-        }, 60000)
+  const [canCollect, setCanCollect] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-        return () => clearInterval(interval)
-    }, []);
+  useEffect(() => {
+    fetch('/api/user/update-time', { method: 'POST' })
+      .then((res) => res.json())
+      .then((data) => {
+        setCanCollect(data.canCollect);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (canCollect) return;
+    const interval = setInterval(async () => {
+      try {
+        const result = await fetch('/api/user/update-time', { method: 'POST' });
+        const data = await result.json();
+
+        setCanCollect(data.canCollect);
+        setLoading(false);
+      } catch (err) {
+        console.error('Time update failed:', err);
+      }
+    }, 60000);
+
+    return () => clearInterval(interval);
+  }, [canCollect]);
+
+  return { canCollect, setCanCollect, loading };
 }

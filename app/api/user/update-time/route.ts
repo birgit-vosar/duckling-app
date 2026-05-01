@@ -16,8 +16,8 @@ export async function POST(req: Request) {
   );
 
   const newTotal: number = result.rows[0].total_minutes;
-  const isTreshhold = newTotal % 60 === 0 && newTotal <= 120;
-  const newSkin = isTreshhold ? `skin_${newTotal / 60 + 1}` : null;
+  const isTreshhold = newTotal % 10 === 0 && newTotal <= 120;
+  const newSkin = isTreshhold ? `skin_${newTotal / 10 + 1}` : null;
 
   if (newSkin) {
     await pool.query(
@@ -28,11 +28,11 @@ export async function POST(req: Request) {
     );
   }
 
-  const resultPending = await pool.query(
-    'SELECT item_id FROM item_unlocks WHERE user_id = $1 AND collected_at IS NULL', [user.id]
+  const resultCollected = await pool.query(
+    'SELECT EXISTS (SELECT 1 FROM item_unlocks WHERE user_id = $1 AND collected_at IS NULL)', [user.id]
   );
 
-  const pendingSkin = resultPending.rows[0]?.item_id ?? null;
+  const canCollect = resultCollected.rows[0].exists;
 
-  return NextResponse.json({ ok: true, pendingSkin: pendingSkin });
+  return NextResponse.json({ ok: true, canCollect: canCollect });
 }
