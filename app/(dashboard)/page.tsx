@@ -13,17 +13,19 @@ export default function () {
     const { mobileMenu, toggleMobileNav } = useNav();
     const { darkMode } = useTheme();
     const [equippedSkin, setEquippedSkin] = useState('default');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-            fetch('/api/cosmetics/equipped', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-            })
-                .then(res => res.json())
-                .then(data => {
-                    setEquippedSkin(data.equippedSkin);
-                });
-        }, []);
+        fetch('/api/cosmetics/equipped', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then(res => res.json())
+            .then(data => {
+                setEquippedSkin(data.equippedSkin);
+                setLoading(false);
+            });
+    }, []);
 
     return (
         <div className='flex flex-row min-h-screen'>
@@ -43,9 +45,11 @@ export default function () {
                                                 <p className='font-mono text-xl font-semibold'>Welcome to dashboard!</p>
                                                 <p className='text-sm text-gray-600 dark:text-gray-400'>Keep up the great momentum!</p>
                                             </div>
-                                            <div className='relative w-[120px] h-[120px] mr-6'>
-                                                <img className='object-contain' src={darkMode ? '/assets/duck4.png' : '/assets/duck5.png'} />
-                                                <img className='object-contain absolute inset-0 -translate-y-4' src={`/assets/${equippedSkin}.png`} />
+                                            <div className='relative w-[120px] h-[120px] mt-2'>
+                                                {loading ? (<div className='flex items-center justify-center mt-8'>
+                                                    <div className='w-8 h-8 border-4 border-gray-300 border-t-transparent rounded-full animate-spin'></div>
+                                                </div>) : (<><img className='object-contain' src={darkMode ? '/assets/duck4.png' : '/assets/duck5.png'} />
+                                                    <img className='object-contain absolute inset-0 -translate-y-4' src={`/assets/${equippedSkin}.png`} /></>)}
                                             </div>
                                         </div>
                                     </Card>
