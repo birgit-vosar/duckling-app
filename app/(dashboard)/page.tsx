@@ -96,7 +96,7 @@ export default function () {
                                         </div>
                                     </Card>
                                     <Card className='group flex-1 mb-30 dark:text-gray-400 text-sm' >
-                                        <div className='p-6 dark:group-hover:text-slate-200'>
+                                        <div className='relative p-6 dark:group-hover:text-slate-200'>
                                             <SkinReward />
                                         </div>
                                     </Card>
