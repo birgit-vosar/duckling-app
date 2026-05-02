@@ -40,6 +40,26 @@ export default function () {
             });
     }, []);
 
+    async function handleChange(skin) {
+        setLoading(true);
+        try {
+            await fetch('/api/cosmetics/switch', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ skin }),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setEquippedSkin(data.newEquippedSkin);
+                });
+        } catch (err) {
+            console.log('Failed to equip skin: ', err);
+        } finally {
+            setLoading(false);
+        }
+        
+    }
+
     return (
         <div className='flex flex-row min-h-screen'>
             <Nav />
@@ -71,13 +91,13 @@ export default function () {
                         </div>
                         <div className='flex mx-6 gap-4 '>
                             {allSkins.map((skin, index) => (
-                                <div key={index} className='group min-w-1/8'>
+                                <button key={index} className='group min-w-1/8' onClick={() => {handleChange(skin)}}>
                                     <div className='transition duration-300 min-h-40 group-hover:scale-98 flex flex-col items-center justify-center dark:bg-[#0e1525] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
                                         <img className='transition duration-300 ease-in-out group-hover:scale-125 object-contain' width={50} height={50} src={`/assets/${skin}-sm.png`} />
                                         <p className='dark:text-white text-sm font-semibold'>Lorem ipsum</p>
                                         <p className='text-xs dark:text-gray-400 text-gray-500'>Not equipped</p>
                                     </div>
-                                </div>
+                                </button>
                             ))}
                         </div>
                     </div>
