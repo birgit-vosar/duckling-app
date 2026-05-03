@@ -36,8 +36,8 @@ export default function () {
                     <TopBar />
                     {/* main */}
                     <div className='grow'>
-                        <div className='grid grid-cols-6 min-h-full'>
-                            <div className='col-span-4 dark:bg-grey-700 h-full'>
+                        <div className='grid sm:grid-row md:grid-cols-6 sm:min-h-screen md:min-h-full'>
+                            <div className='col-span-4 dark:bg-grey-700 sm:min-h-screen md:h-full'>
                                 <div className='flex flex-col h-full p-6 gap-6'>
                                     <Card className='flex-1 px-2'>
                                         <div className='flex flex-row justify-between items-center px-4 py-6'>
@@ -65,7 +65,7 @@ export default function () {
                                         </div>
                                     </Card>
                                     <div className='flex-3'>
-                                        <div className='flex flex-row gap-4'>
+                                        <div className='flex flex-col flex-col-reverse lg:flex-row gap-4'>
                                             <Card className='flex-1' >
                                                 <div className='p-6'>
                                                     <p className='text-sm'>This achievements feature is currently in development</p>
@@ -96,7 +96,7 @@ export default function () {
                                         </div>
                                     </Card>
                                     <Card className='group flex-1 mb-30 dark:text-gray-400 text-sm' >
-                                        <div className='relative p-6 dark:group-hover:text-slate-200'>
+                                        <div className='relative h-23 p-6 dark:group-hover:text-slate-200'>
                                             <SkinReward />
                                         </div>
                                     </Card>

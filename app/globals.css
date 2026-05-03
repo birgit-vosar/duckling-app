@@ -1,5 +1,6 @@
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
+@import 'tailwindcss';
+@import 'tailwind-animations';
+@plugin '@tailwindcss/typography';
 
 :root {
   --background: #ffffff;
@@ -26,5 +27,18 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shine {
+  animation: shine 1.5s infinite;
 }
 

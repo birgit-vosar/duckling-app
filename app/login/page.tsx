@@ -94,7 +94,7 @@ export default function Login() {
                             </div>
                         </div>
                         <div>
-                            <button type='submit' className='items-center justify-center rounded-md text-sm font-medium bg-blue-500 h-10 w-full'>
+                            <button type='submit' className='cursor-pointer hover:bg-blue-600 active:bg-blue-700 items-center justify-center rounded-md text-sm font-medium bg-blue-500 h-10 w-full'>
                                 {loading ? 'Logging in...' : "Log in"}
                             </button>
                         </div>

@@ -57,7 +57,7 @@ export default function () {
         } finally {
             setLoading(false);
         }
-        
+
     }
 
     return (
@@ -69,7 +69,7 @@ export default function () {
                     <TopBar />
                     {/* main */}
                     <div className='flex flex-col'>
-                        <div className='flex dark:bg-[#0e1525] border border-gray-300 rounded-md dark:border-gray-800 m-6 gap-4 h-full p-4'>
+                        <div className='flex dark:bg-[#0e1525] bg-[#fbf7f7] border border-gray-300 rounded-md dark:border-gray-800 m-6 gap-4 h-full p-4'>
                             <div className='relative w-[120px] h-[120px] mt-2'>
                                 {loading ? (<div className='flex items-center justify-center mt-8'>
                                     <div className='w-8 h-8 border-4 border-gray-300 border-t-transparent rounded-full animate-spin'></div>
@@ -83,16 +83,16 @@ export default function () {
                             </div>
                         </div>
                         <div className='flex gap-2 m-6 items-center'>
-                            <p className='font-semibold font-sans text-sm'>Common</p>
+                            <p className='font-semibold font-sans text-sm text-gray-500'>Common</p>
                             <div className='dark:bg-sky-950 border border-gray-300 rounded-xl px-2.5 text-xs py-0.5'>
                                 <p>{totalAmount}</p>
                             </div>
-                            <div className='flex-1 h-px bg-gray-800'></div>
+                            <div className='flex-1 h-px bg-gray-300 dark:bg-gray-800'></div>
                         </div>
                         <div className='flex mx-6 gap-4 '>
                             {allSkins.map((skin, index) => (
-                                <button key={index} className='group min-w-1/8' onClick={() => {handleChange(skin)}}>
-                                    <div className='transition duration-300 min-h-40 group-hover:scale-98 flex flex-col items-center justify-center dark:bg-[#0e1525] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
+                                <button key={index} className='group min-w-1/8' onClick={() => { handleChange(skin) }}>
+                                    <div className='transition duration-300 min-h-40 group-hover:scale-98 flex flex-col items-center justify-center dark:bg-[#0e1525] bg-[#fbf7f7] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
                                         <img className='transition duration-300 ease-in-out group-hover:scale-125 object-contain' width={50} height={50} src={`/assets/${skin}-sm.png`} />
                                         <p className='dark:text-white text-sm font-semibold'>Lorem ipsum</p>
                                         <p className='text-xs dark:text-gray-400 text-gray-500'>Not equipped</p>
