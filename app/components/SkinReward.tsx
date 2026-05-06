@@ -62,8 +62,8 @@ export function SkinReward() {
             }
             {newSkin &&
                 <div className='animate-slide-up-fade flex justify-between bg-gradient-to-r from-transparent via-white/40 to-transparent b'>
-                    <div className='h-full items-center w-full flex justify-center mb-2'>
-                        <img src={`/assets/${newSkin}-sm.png`} width={80} height={80} />
+                    <div className='h-full items-center w-full flex justify-center mb-2 max-h-[70px]'>
+                        <img src={`/assets/${newSkin}-sm.png`} width={60} height={60} />
                     </div>
                 </div>
             }

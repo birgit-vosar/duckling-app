@@ -1,6 +1,6 @@
 'use client'
 
-import { useTimeTracker } from "../hooks/useTimeTracker";
+import { useTimeTracker } from '@/app/hooks/useTimeTracker';
 
 export function TimeTracker() {
     useTimeTracker();

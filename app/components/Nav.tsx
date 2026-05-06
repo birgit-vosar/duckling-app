@@ -2,8 +2,8 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
-import { useNav } from '../context/NavContext';
-import { useTheme } from '../context/ThemeContext';
+import { useNav } from '@/app/context/NavContext';
+import { useTheme } from '@/app/context/ThemeContext';
 
 export default function Nav() {
     const pathname = usePathname();
@@ -66,7 +66,7 @@ export default function Nav() {
                 <div className='flex-1 pt-2 px-2'>
                     {navItems.map((item) => (
                         <Link key={item.href} href={item.href} className={`cursor-pointer items-center flex flex-row py-2 w-full rounded-xl gap-3 pl-4 text-sm active:opacity-50 
-              ${pathname === item.href
+                            ${pathname === item.href
                                 ? 'bg-gray-200 text-zinc-700 hover:bg-[#D2EAF1] hover:text-gray-700 dark:bg-[#1c212e] dark:hover:bg-blue-900 dark:text-white dark:hover:text-white'
                                 : 'text-gray-400 hover:bg-[#D2EAF1] hover:text-gray-700 dark:hover:bg-blue-900 dark:hover:text-gray-200 transition duration-300'
                             }`}>

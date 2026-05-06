@@ -15,6 +15,7 @@ export default function () {
   const [mode, setMode] = useState<'Explore' | 'Reflect'>('Reflect');
   const bottomRef = useRef<HTMLDivElement>(null);
   const [pageText, setPageText] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
+  const [sessions, setSessions] = useState(false);
 
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function () {
   }, [pageText, isLoading]);
 
   useEffect(() => {
-    setTimeout(() => {setError(false)}, 500);
+    setTimeout(() => { setError(false) }, 500);
   }, [error])
 
   async function handleSubmit() {
@@ -72,6 +73,10 @@ export default function () {
 
   }
 
+  async function handleSessions() {
+    setSessions(!sessions);
+  }
+
   return (
     <div className='flex flex-row min-h-screen'>
       <Nav />
@@ -83,7 +88,7 @@ export default function () {
           {/* main content */}
           <div className='grid grid-cols-12 h-full min-h-0'>
             {/* sessions sidebar */}
-            <div className='col-span-2 border-r border-gray-300 dark:border-[#182543]'>
+            <div className={`${sessions === false ? 'hidden col-span-0' : ' col-span-2 border-r border-gray-300 dark:border-[#182543]'}`}>
               <div className='flex flex-col'>
                 <div className='border-b border-gray-300 dark:border-gray-800'>
                   <p className='pl-4 py-3 text-zinc-800 dark:text-white'>Sessions</p>
@@ -107,12 +112,12 @@ export default function () {
             </div>
 
             {/* chat area */}
-            <div className='col-span-10 flex flex-col h-full min-h-0'>
-              <div className='flex-none border-b border-gray-300 dark:border-[#182543] flex justify-items-start gap-3 pl-5 py-4'>
-                <div className='flex-none'>
-                  <p className='text-lg'>🦆</p>
-                </div>
+            <div className={` ${sessions === false ? 'col-span-12 flex flex-col h-full min-h-0' : 'col-span-10 flex flex-col h-full min-h-0'}`}>
+              <div className='flex-none border-b border-gray-300 dark:border-[#182543] flex justify-items-start gap-3 pl-8 py-4'>
                 <div className='grow'>
+                  <button onClick={handleSessions} className='pb-4 text-sm text-sky-800 dark:text-[#8086c9] underline underline-offset-2 cursor-pointer flex items-center'>
+                    / Previous sessions
+                    </button>
                   <p className='text-lg'>Session 1</p>
                   <p className='text-sm text-gray-500'>Explain your problem — sometimes that's all it takes.</p>
                 </div>
@@ -170,7 +175,7 @@ export default function () {
                         rows={4}
                         className={`block w-full rounded-md px-3.5 py-2 text-sm border-2 focus:outline-2 focus:-outline-offset-2
                           bg-white dark:bg-transparent text-gray-800 border-gray-200 placeholder:text-zinc-400 focus:outline-gray-400
-                           dark:text-white dark:border-gray-800 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500 ${ error === true && 'border-red-300 dark:border-red-900'}`}
+                           dark:text-white dark:border-gray-800 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500 ${error === true && 'border-red-300 dark:border-red-900'}`}
                       />
                     </div>
                     <div className='flex flex-row gap-4 w-full justify-end my-2'>

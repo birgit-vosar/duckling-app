@@ -8,14 +8,14 @@ export function useTimeTracker() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/user/update-time', { method: 'POST' })
-      .then((res) => res.json())
-      .then((data) => {
-        setCanCollect(data.canCollect);
-        setSecondsUntilNext(data.secondsUntilNext);
-        setLoading(false);
-      });
-  }, []);
+    fetch('/api/user/update-time')
+        .then((res) => res.json())
+        .then((data) => {
+            setCanCollect(data.canCollect);
+            setSecondsUntilNext(data.secondsUntilNext);
+            setLoading(false);
+        });
+}, []);
 
   useEffect(() => {
     if (canCollect) return;
