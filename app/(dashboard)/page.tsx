@@ -31,14 +31,13 @@ export default function () {
         <div className='flex flex-row min-h-screen'>
             <Nav />
             {mobileMenu ? (<div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav} />) : (<div className='md:hidden' />)}
-            <div className={`flex-1 bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white h-full`}>
-                <div className='flex flex-col h-screen'>
+            <div className={`flex-1 bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white min-h-screen`}>
+                <div className='flex flex-col min-h-screen'>
                     <TopBar />
                     {/* main */}
-                    <div className='grow'>
-                        <div className='grid sm:grid-row md:grid-cols-6 sm:min-h-screen md:min-h-full'>
-                            <div className='col-span-4 dark:bg-grey-700 sm:min-h-screen md:h-full'>
-                                <div className='flex flex-col h-full p-6 gap-6'>
+                    <div className='grow flex flex-col lg:flex-row'>
+                            <div className='flex-[4] dark:bg-grey-700'>
+                                <div className='flex flex-col p-6 gap-6'>
                                     <Card className='flex-1 px-2'>
                                         <div className='flex flex-row justify-between items-center px-4 py-6'>
                                             <div className='flex flex-col gap-2'>
@@ -83,26 +82,25 @@ export default function () {
 
                                 </div>
                             </div>
-                            <div className='col-span-2 dark:bg-grey-800 h-full'>
-                                <div className='flex flex-col h-full p-6 gap-6 text-gray-600'>
-                                    <Card className='flex-3'>
+                            <div className='flex-[2] lg:col-span-2 dark:bg-grey-800'>
+                                <div className='flex flex-col p-6 gap-6 text-gray-600 min-h-full'>
+                                    <Card className='flex-4'>
                                         <div className='p-6'>
                                             <p className='text-sm'>This calendar feature is currently in development</p>
                                         </div>
                                     </Card>
-                                    <Card className='flex-3' >
+                                    <Card className='flex-4' >
                                         <div className='p-6'>
                                             <p className='text-sm'>This pomodoro feature is currently in development</p>
                                         </div>
                                     </Card>
-                                    <Card className='group flex-1 mb-30 dark:text-gray-400 text-sm' >
-                                        <div className='relative h-23 p-6 dark:group-hover:text-slate-200'>
+                                    <Card className='group flex-1 dark:text-gray-400 text-sm lg:mb-30 max-h-25 ' >
+                                        <div className='flex-1 flex flex-col dark:group-hover:text-slate-200'>
                                             <SkinReward />
                                         </div>
                                     </Card>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

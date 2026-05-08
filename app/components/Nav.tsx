@@ -50,8 +50,7 @@ export default function Nav() {
     ]
 
     return (
-        <div>
-            <div className={`${mobileMenu ? 'fixed top-0 left-0 w-70 h-full z-50' : 'hidden md:flex'} md:relative md:block flex flex-col h-screen overflow-hidden bg-zinc-100 border-r border-gray-300 dark:border-gray-800 dark:bg-[#0f121a] text-black dark:text-white ${menuState ? 'w-56' : 'w-16'}`}>
+            <div className={`${mobileMenu ? 'fixed top-0 left-0 w-70 h-full z-50' : 'hidden md:flex'} md:relative md:block flex flex-col self-stretch overflow-y-auto bg-zinc-100 border-r border-gray-300 dark:border-gray-800 dark:bg-[#0f121a] text-black dark:text-white ${menuState ? 'w-56' : 'w-16'}`}>
 
                 <Link href='/' className='flex pl-4 py-3 gap-2'>
                     <img width={50} height={50} src={darkMode ? '/assets/duck4.png' : '/assets/duck5.png'} />
@@ -77,6 +76,5 @@ export default function Nav() {
                 </div>
 
             </div>
-        </div>
     )
 }
