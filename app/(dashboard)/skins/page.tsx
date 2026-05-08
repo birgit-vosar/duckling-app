@@ -91,7 +91,7 @@ export default function () {
                         </div>
                         <div className='flex mx-6 gap-4 '>
                             {allSkins.map((skin, index) => (
-                                <button key={index} className='group min-w-1/8' onClick={() => { handleChange(skin) }}>
+                                <button key={index} className='group w-full md:w-1/8 min-w-1/8' onClick={() => { handleChange(skin) }}>
                                     <div className='transition duration-300 min-h-40 cursor-pointer group-hover:scale-98 flex flex-col items-center justify-center dark:bg-[#0e1525] bg-[#fbf7f7] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
                                         <img className='transition duration-300 ease-in-out group-hover:scale-125 object-contain' width={50} height={50} src={`/assets/${skin}-sm.png`} />
                                         <p className='dark:text-white text-sm font-semibold'>Lorem ipsum</p>
