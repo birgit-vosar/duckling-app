@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/app/context/ThemeContext";
 import '@/app/globals.css';
-import { TimeTracker } from '@/app/components/TimeTracker'
+import NextTopLoader from 'nextjs-toploader';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,14 +24,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider>
-            {children}
+          <NextTopLoader
+                    color='#314c79'
+                    height={3}
+                    showSpinner={false}
+                />
+          {children}
         </ThemeProvider>
       </body>
     </html>
