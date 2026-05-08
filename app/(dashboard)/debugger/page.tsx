@@ -5,12 +5,12 @@ import Nav from '@/app/components/Nav';
 import TopBar from '@/app/components/TopBar';
 import { useState, useEffect, useRef } from 'react';
 import DebuggerLoading from '@/app/components/DebuggerLoading';
-import ReactMarkDown from 'react-markdown';
+import ReactMarkdown from 'react-markdown';
 
-export default function () {
+export default function DebuggerPage() {
   const { mobileMenu, toggleMobileNav, toggleNav } = useNav();
   const [message, setMessage] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<'Explore' | 'Reflect'>('Reflect');
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -61,14 +61,13 @@ export default function () {
           { content: data.response, role: 'assistant' }
         ]
       )
-
-      setIsLoading(false);
-
       setError(false);
 
     } catch (err) {
       console.log('Textarea error', err);
-      alert('Something went wrong with submitting text.');
+      setError(true);
+    } finally {
+      setIsLoading(false);
     }
 
   }
@@ -149,12 +148,12 @@ export default function () {
                         (text.role === 'user' ?
                           (
                             <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-800 bg-gray-200 border-transparent w-fit max-w-md place-self-end border rounded-md dark:border-transparent'>
-                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkDown>{text.content}</ReactMarkDown></div>
+                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkdown>{text.content}</ReactMarkdown></div>
                             </div>
                           ) :
                           (
                             <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-900 bg-white border border-gray-200 rounded-md dark:border-[#182543] w-fit max-w-md'>
-                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkDown>{text.content}</ReactMarkDown></div>
+                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkdown>{text.content}</ReactMarkdown></div>
                             </div>
                           )
                         )
