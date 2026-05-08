@@ -8,7 +8,7 @@ import DebuggerLoading from '@/app/components/DebuggerLoading';
 import ReactMarkDown from 'react-markdown';
 
 export default function () {
-  const { mobileMenu, toggleMobileNav } = useNav();
+  const { mobileMenu, toggleMobileNav, toggleNav } = useNav();
   const [message, setMessage] = useState('');
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -83,15 +83,23 @@ export default function () {
       {mobileMenu ? (<div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav} />) : (<div className='md:hidden' />)}
 
       <div className='bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white flex-1'>
-        <div className='flex flex-col h-screen'>
+        <div className='grow flex flex-col h-screen'>
           <TopBar />
           {/* main content */}
-          <div className='grid grid-cols-12 h-full min-h-0'>
+          <div className='flex w-full h-full min-h-0'>
             {/* sessions sidebar */}
-            <div className={`${sessions === false ? 'hidden col-span-0' : ' col-span-2 border-r border-gray-300 dark:border-[#182543]'}`}>
+            {sessions && (
+              <div className='fixed inset-0 bg-black/20 z-40 xl:hidden' onClick={handleSessions} />
+            )}
+            <div className={`${sessions === false ? 'hidden' : 'fixed top-0 left-0 h-full w-80 z-50 xl:relative xl:w-auto xl:flex-[2] min-w-80'} bg-stone-100 dark:bg-[#0b111e] border-r border-gray-300 dark:border-[#182543]`}>
               <div className='flex flex-col'>
-                <div className='border-b border-gray-300 dark:border-gray-800'>
-                  <p className='pl-4 py-3 text-zinc-800 dark:text-white'>Sessions</p>
+                <div className='border-b border-gray-300 dark:border-gray-800 flex justify-between px-4'>
+                  <p className=' py-3 text-zinc-800 dark:text-white'>Sessions</p>
+                  <button onClick={handleSessions} className='cursor-pointer md:block'>
+                    <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='size-5'>
+                      <path strokeLinecap='round' strokeLinejoin='round' d='M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15' />
+                    </svg>
+                  </button>
                 </div>
                 <div className='px-2'>
                   <div className='flex justify-evenly py-2 w-full px-2'>
@@ -112,22 +120,22 @@ export default function () {
             </div>
 
             {/* chat area */}
-            <div className={` ${sessions === false ? 'col-span-12 flex flex-col h-full min-h-0' : 'col-span-10 flex flex-col h-full min-h-0'}`}>
-              <div className='flex-none border-b border-gray-300 dark:border-[#182543] flex justify-items-start gap-3 pl-8 py-4'>
+            <div className={` ${sessions === false ? 'w-full flex flex-col h-full min-h-0' : 'flex-9 flex flex-col h-full min-h-0'}`}>
+              <div className='flex-none border-b border-gray-300 dark:border-[#182543] flex justify-items-start gap-3 pl-4 lg:pl-8 py-4'>
                 <div className='grow'>
-                  <button onClick={handleSessions} className='pb-4 text-sm text-sky-800 dark:text-[#8086c9] underline underline-offset-2 cursor-pointer flex items-center'>
+                  <button onClick={handleSessions} className='pb-4 text-gray-500 text-sm underline underline-offset-2 cursor-pointer flex items-center'>
                     / Previous sessions
-                    </button>
+                  </button>
                   <p className='text-lg'>Session 1</p>
                   <p className='text-sm text-gray-500'>Explain your problem — sometimes that's all it takes.</p>
                 </div>
               </div>
 
-              <div className='flex-1 min-h-0 overflow-y-auto border-b border-gray-300 dark:border-[#182543] min-w-full px-92'>
+              <div className='flex-1 min-h-0 overflow-y-auto border-b border-gray-300 dark:border-[#182543] min-w-full xl:px-92'>
 
                 {pageText.length === 0 ?
-                  (<div className='justify-center h-full md:mt-60'>
-                    <div className='flex flex-col gap-4 min-w-full place-content-center items-center mb-16'><div className='flex flex-col items-center gap-4'>
+                  (<div className='flex align-content-end lg:justify-center h-full pt-2 sxl:pt-60'>
+                    <div className='flex flex-col gap-4 min-w-full place-content-center items-center xl:mb-16'><div className='flex flex-col items-center gap-4'>
                       <p className='text-6xl'>🦆</p>
                       <p className='text-xl font-bold'>What's bugging you?</p>
                     </div>
@@ -164,7 +172,7 @@ export default function () {
 
               <div className='flex-none bg-zinc-100 dark:bg-[#0b111e]'>
                 <div className='w-full flex flex-col gap-2 items-center'>
-                  <div className='items-center my-1 min-w-1/2 w-1/2'>
+                  <div className='items-center my-1 min-w-1/2 w-full p-4 lg:w-1/2'>
                     <div className='mt-2.5'>
                       <textarea
                         id='message'
