@@ -65,15 +65,19 @@ export default function () {
                                     </Card>
                                     <div className='flex-3'>
                                         <div className='grid lg:grid-cols-2 grid-col-reverse gap-4'>
-                                            <Card className='col-span-1 order-2 lg:order-1' >
+                                            <Card className='col-span-1 order-2 lg:order-1 text-gray-600' >
                                                 <div className='p-6'>
                                                     <p className='text-sm'>This achievements feature is currently in development</p>
                                                 </div>
                                             </Card>
                                             <Card className='col-span-1 order-1 lg:order-2' >
-                                                <div className='p-6'>
-                                                    <p className='text-sm w-3/4 mb-1'>This duck debugger feature is currently in development, but will come pretty soon.</p>
-                                                    <a href='/debugger' className='text-xs text-blue-800 dark:text-blue-400 underline underline-offset-2'>Get a glimpse »</a>
+                                                <div className='flex flex-col p-6 gap-8'>
+                                                    <div className='flex flex-col'>
+                                                    <p className='tracking-wider text-xs text-gray-500 uppercase font-semibold'>Rubber duck</p>
+                                                    <p className='text-lg font-medium my-2'>Stuck on something?</p>
+                                                    <p className='text-sm text-gray-500'>If you've got a messy problem, unclear situation or tangled thoughts about code, drop it and I'll clean it up for you.</p>
+                                                    </div>
+                                                    <a href='/debugger' className='dark:hover:bg-gray-900 hover:bg-gray-200 tracking-wider text-sm font-medium dark:text-white text-center border rounded-xl border-gray-300 bg-white dark:bg-[#0f121a] dark:border-[#1e2841] py-3'>Talk to Duck</a>
                                                 </div>
                                             </Card>
                                         </div>

@@ -38,7 +38,7 @@ export function SkinReward() {
                         </svg>
 
                         <div>
-                            <p className='text-sm font-semibold text-gray-500 text-left'>Free Skin Drop</p>
+                            <p className='tracking-wider text-sm font-semibold text-gray-500 text-left'>Free Skin Drop</p>
                             <p className='text-xs dark:text-gray-400 text-gray-500'>Come back soon for your reward!</p>
                         </div>
                     </div>
