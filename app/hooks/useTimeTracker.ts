@@ -18,7 +18,7 @@ export function useTimeTracker() {
 }, []);
 
   useEffect(() => {
-    if (canCollect) return;
+    if (canCollect === true) return;
     const interval = setInterval(async () => {
       try {
         const result = await fetch('/api/user/update-time', { method: 'POST' });
