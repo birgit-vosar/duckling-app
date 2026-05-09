@@ -16,6 +16,7 @@ export default function DebuggerPage() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const [pageText, setPageText] = useState<{ role: 'user' | 'assistant'; content: string }[]>([]);
   const [sessions, setSessions] = useState(false);
+  const [conversationId, setConversationId] = useState<number | null>(null);
 
 
   useEffect(() => {
@@ -23,12 +24,12 @@ export default function DebuggerPage() {
   }, [pageText, isLoading]);
 
   useEffect(() => {
-    setTimeout(() => { setError(false) }, 500);
+    setTimeout(() => { setError('False') }, 500);
   }, [error])
 
   async function handleSubmit() {
     if (!message) {
-      setError(true);
+      setError('True');
       return;
     }
     setPageText(prev =>
@@ -44,9 +45,10 @@ export default function DebuggerPage() {
       const response = await fetch('/api/debug/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, mode })
+        body: JSON.stringify({ message, conversationId, mode })
       })
       const data = await response.json();
+      setConversationId(data.conversationId);
 
 
 
@@ -61,11 +63,11 @@ export default function DebuggerPage() {
           { content: data.response, role: 'assistant' }
         ]
       )
-      setError(false);
+      setError('False');
 
     } catch (err) {
       console.log('Textarea error', err);
-      setError(true);
+      setError('True');
     } finally {
       setIsLoading(false);
     }
@@ -182,7 +184,7 @@ export default function DebuggerPage() {
                         rows={4}
                         className={`block w-full rounded-md px-3.5 py-2 text-sm border-2 focus:outline-2 focus:-outline-offset-2
                           bg-white dark:bg-transparent text-gray-800 border-gray-200 placeholder:text-zinc-400 focus:outline-gray-400
-                           dark:text-white dark:border-gray-800 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500 ${error === true && 'border-red-300 dark:border-red-900'}`}
+                           dark:text-white dark:border-gray-800 dark:placeholder:text-gray-500 dark:focus:outline-indigo-500 ${error === 'True' && 'border-red-300 dark:border-red-900'}`}
                       />
                     </div>
                     <div className='flex flex-row gap-4 w-full justify-end my-2'>

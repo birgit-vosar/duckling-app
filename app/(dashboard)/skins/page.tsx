@@ -7,12 +7,12 @@ import { useTheme } from '@/app/context/ThemeContext';
 import { useEffect, useState } from 'react';
 
 
-export default function () {
+export default function SkinsPage() {
     const { mobileMenu, toggleMobileNav } = useNav();
     const { darkMode } = useTheme();
     const [equippedSkin, setEquippedSkin] = useState('default');
     const [totalAmount, setTotalAmount] = useState(0);
-    const [allSkins, setAllSkins] = useState([]);
+    const [allSkins, setAllSkins] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -23,8 +23,9 @@ export default function () {
             .then(res => res.json())
             .then(data => {
                 setEquippedSkin(data.equippedSkin);
-                setLoading(false);
-            });
+            })
+            .catch(err => { console.error('Failed to fetch equipped skin:', err); })
+            .finally(() => setLoading(false));
     }, []);
 
     useEffect(() => {
@@ -36,22 +37,21 @@ export default function () {
             .then(data => {
                 setTotalAmount(data.totalAmount);
                 setAllSkins(data.allSkins);
-                setLoading(false);
-            });
+            })
+            .catch(err => { console.error('Failed to fetch all skins:', err); })
+            .finally(() => setLoading(false));
     }, []);
 
-    async function handleChange(skin) {
+    async function handleChange(skin: string) {
         setLoading(true);
         try {
-            await fetch('/api/cosmetics/switch', {
+            const response = await fetch('/api/cosmetics/switch', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ skin }),
-            })
-                .then(res => res.json())
-                .then(data => {
-                    setEquippedSkin(data.newEquippedSkin);
-                });
+            });
+            const data = await response.json();
+            setEquippedSkin(data.newEquippedSkin);
         } catch (err) {
             console.log('Failed to equip skin: ', err);
         } finally {
@@ -93,9 +93,9 @@ export default function () {
                             {allSkins.map((skin, index) => (
                                 <button key={index} className='group w-full md:w-1/8 min-w-1/8' onClick={() => { handleChange(skin) }}>
                                     <div className='transition duration-300 min-h-40 cursor-pointer group-hover:scale-98 flex flex-col items-center justify-center dark:bg-[#0e1525] bg-[#fbf7f7] border border-gray-300 rounded-md dark:border-gray-800 p-6 gap-1'>
-                                        <img className='transition duration-300 ease-in-out group-hover:scale-125 object-contain' width={50} height={50} src={`/assets/${skin}-sm.png`} />
+                                        <img className='transition duration-300 ease-in-out group-hover:scale-125 object-contain min-h-[50px]' width={50} height={50} src={`/assets/${skin}-sm.png`} />
                                         <p className='dark:text-white text-sm font-semibold'>Lorem ipsum</p>
-                                        <p className='text-xs dark:text-gray-400 text-gray-500'>Not equipped</p>
+                                        <p className='text-xs dark:text-gray-400 text-gray-500'>{skin === equippedSkin ? 'Equipped' : 'Not equipped'}</p>
                                     </div>
                                 </button>
                             ))}
