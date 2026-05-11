@@ -4,12 +4,12 @@ import { useNav } from '@/app/context/NavContext';
 import Nav from '@/app/components/Nav';
 import TopBar from '@/app/components/TopBar';
 import Card from '@/app/components/Card';
+import Link from 'next/link';
 import { useTheme } from '@/app/context/ThemeContext';
 import { useEffect, useState } from 'react';
-import { Duck } from '@/app/components/Duck';
 import { SkinReward } from '@/app/components/SkinReward';
 
-export default function () {
+export default function DashboardPage() {
     const { mobileMenu, toggleMobileNav } = useNav();
     const { darkMode } = useTheme();
     const [equippedSkin, setEquippedSkin] = useState('default');
@@ -23,8 +23,9 @@ export default function () {
             .then(res => res.json())
             .then(data => {
                 setEquippedSkin(data.equippedSkin);
-                setLoading(false);
-            });
+            })
+            .catch(err => console.error('Failed to fetch equipped skin:', err))
+            .finally(() => setLoading(false));
     }, []);
 
     return (
@@ -36,7 +37,7 @@ export default function () {
                     <TopBar />
                     {/* main */}
                     <div className='grow flex flex-col lg:flex-row'>
-                            <div className='flex-[4] dark:bg-grey-700'>
+                            <div className='flex-[4] dark:bg-gray-700'>
                                 <div className='flex flex-col p-6 gap-6'>
                                     <Card className='flex-1 px-2'>
                                         <div className='flex flex-row justify-between items-center px-4 py-6'>
@@ -77,7 +78,7 @@ export default function () {
                                                     <p className='text-lg font-medium my-2'>Stuck on something?</p>
                                                     <p className='text-sm text-gray-500'>If you've got a messy problem, unclear situation or tangled thoughts about code, drop it and I'll clean it up for you.</p>
                                                     </div>
-                                                    <a href='/debugger' className='dark:hover:bg-gray-900 hover:bg-gray-200 tracking-wider text-sm font-medium dark:text-white text-center border rounded-xl border-gray-300 bg-white dark:bg-[#0f121a] dark:border-[#1e2841] py-3'>Talk to Duck</a>
+                                                    <Link href='/debugger' className='dark:hover:bg-gray-900 hover:bg-gray-200 tracking-wider text-sm font-medium dark:text-white text-center border rounded-xl border-gray-300 bg-white dark:bg-[#0f121a] dark:border-[#1e2841] py-3'>Talk to Duck</Link>
                                                 </div>
                                             </Card>
                                         </div>
