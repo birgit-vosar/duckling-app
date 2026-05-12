@@ -26,8 +26,8 @@ export async function POST(req: NextRequest) {
         'INSERT INTO users (email, password_hash) VALUES ($1, $2)',
         [email, hash],
       );
-    } catch (err: any) {
-      if (err.code === '23505') {
+    } catch (err: unknown) {
+      if (err instanceof Error && (err as { code?: string }).code === '23505') {
         return NextResponse.json(
           { error: 'User already exists' },
           { status: 409 },

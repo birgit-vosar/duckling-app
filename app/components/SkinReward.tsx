@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { formatCountdown } from '@/app/lib/formatTime';
 import { useTimeTracker } from '@/app/hooks/useTimeTracker';
 

@@ -4,7 +4,7 @@ import { useNav } from '@/app/context/NavContext'
 import Nav from '@/app/components/Nav'
 import TopBar from '@/app/components/TopBar'
 
-export default function () {
+export default function AchievementsPage() {
     const { mobileMenu, toggleMobileNav } = useNav()
 
     return (
