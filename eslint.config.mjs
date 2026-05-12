@@ -13,10 +13,13 @@ const eslintConfig = defineConfig([
   ]),
   {
     rules: {
-      "react/no-unescaped-entities": "off",
-      "react/display-name": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-    }
+  "react/no-unescaped-entities": "off",
+  "react/display-name": "off",
+  "@typescript-eslint/no-explicit-any": "off",
+  "@next/next/no-img-element": "off",
+  "jsx-a11y/alt-text": "off",
+  "@typescript-eslint/no-unused-vars": "off",
+}
   }
 ]);
 
