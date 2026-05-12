@@ -17,9 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Duckling',
-  },
+  title: "Duckling",
   description: 'The rubber duck debugger for developers. Get unstuck without the shame.',
 }
 

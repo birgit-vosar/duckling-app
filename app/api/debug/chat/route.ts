@@ -1,5 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { pool } from '@/app/lib/db';
 import { getSessionUser } from '@/app/lib/auth';
 import { getSystemPrompt } from '@/app/lib/prompts';
@@ -8,7 +8,7 @@ const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { message, conversationId, mode } = body;
