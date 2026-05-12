@@ -31,7 +31,7 @@ export function SkinReward() {
     return (
         <div className='flex-1 flex flex-col'>
             {canCollect === false ?
-                <div className='flex flex-col lg:flex-row justify-between  p-6 flex-1'>
+                <div className='flex flex-row justify-between  p-6 flex-1'>
                     <div className='flex gap-3 items-center'>
                         <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth={1.5} stroke='currentColor' className='hidden xl:block size-8 text-gray-500 dark:text-gray-400'>
                             <path strokeLinecap='round' strokeLinejoin='round' d='M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z' />
@@ -62,7 +62,7 @@ export function SkinReward() {
             }
             {newSkin &&
                 <div className='animate-slide-up-fade flex items-center bg-gradient-to-r from-transparent to-transparent b'>
-                    <div className='h-full items-center w-full flex justify-center mb-2 max-h-[70px]'>
+                    <div className='h-full items-center w-full flex justify-center mb-2 mt-4 max-h-[70px]'>
                         <img src={`/assets/${newSkin}-sm.png`} width={60} height={60} />
                     </div>
                 </div>

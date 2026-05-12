@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/app/context/ThemeContext";
 import '@/app/globals.css';
 import NextTopLoader from 'nextjs-toploader';
 
+
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -15,9 +17,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Duckling - Workflow Companion",
-  description: "AI-powered debugging companion for developers",
-};
+  title: {
+    default: 'Duckling',
+  },
+  description: 'The rubber duck debugger for developers. Get unstuck without the shame.',
+}
 
 export default function RootLayout({
   children,

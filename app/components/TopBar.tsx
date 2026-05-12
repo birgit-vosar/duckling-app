@@ -40,14 +40,11 @@ export default function TopBar() {
                     </svg>
                 </button>
                 <button onClick={handleClick} className='group px-4 py-2'>
-                    <div className='flex items-center gap-2 flex cursor-pointer p-2 rounded-md border border-gray-300 dark:border-transparent dark:bg-gray-800 hover:scale-105 transition duration-200'>
+                    <div className='flex items-center flex cursor-pointer p-2 rounded-md border border-gray-300 dark:border-transparent dark:bg-gray-800 hover:scale-105 transition duration-200'>
                         <svg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' strokeWidth='1.5' stroke='currentColor' className='size-5'>
                             <path strokeLinecap='round' strokeLinejoin='round' d='M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z' />
                         </svg>
-                        <p className='opacity-0 max-w-0 overflow-hidden
-      group-hover:opacity-100 group-hover:max-w-xs
-      transition-all duration-600
-      whitespace-nowrap'>Logout</p>
+                        <p className='opacity-0 max-w-0 overflow-hidden group-hover:opacity-100 group-hover:px-2 group-hover:max-w-xs transition-all duration-600 whitespace-nowrap'>Logout</p>
                     </div>
                 </button>
             </div>

@@ -1,5 +1,6 @@
-import { TimeTracker } from '@/app/components/TimeTracker'
-import { NavProvider } from '@/app/context/NavContext'
+import { TimeTracker } from '@/app/components/TimeTracker';
+import { NavProvider } from '@/app/context/NavContext';
+import type { Metadata } from "next";
 
 export default function DashboardLayout({
   children,

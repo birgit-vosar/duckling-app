@@ -9,11 +9,15 @@ import { useTheme } from '@/app/context/ThemeContext';
 import { useEffect, useState } from 'react';
 import { SkinReward } from '@/app/components/SkinReward';
 
+
+
 export default function DashboardPage() {
     const { mobileMenu, toggleMobileNav } = useNav();
     const { darkMode } = useTheme();
     const [equippedSkin, setEquippedSkin] = useState('default');
     const [loading, setLoading] = useState(true);
+
+    
 
     useEffect(() => {
         fetch('/api/cosmetics/equipped', {
@@ -37,10 +41,10 @@ export default function DashboardPage() {
                     <TopBar />
                     {/* main */}
                     <div className='grow flex flex-col lg:flex-row'>
-                            <div className='flex-[4] dark:bg-gray-700'>
-                                <div className='flex flex-col p-6 gap-6'>
+                            <div className='flex-[4] dark:bg-[#0f121a]'>
+                                <div className='flex flex-col px-6 pt-6 sm:p-6 gap-6'>
                                     <Card className='flex-1 px-2'>
-                                        <div className='flex flex-row justify-between items-center px-4 py-6'>
+                                        <div className='flex flex-row justify-between items-center px-4 py-6 mt-2'>
                                             <div className='flex flex-col gap-2'>
                                                 <p className='font-mono text-xl font-semibold'>Welcome to dashboard!</p>
                                                 <p className='text-sm text-gray-600 dark:text-gray-400'>Keep up the great momentum!</p>

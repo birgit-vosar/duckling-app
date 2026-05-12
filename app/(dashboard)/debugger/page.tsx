@@ -49,14 +49,10 @@ export default function DebuggerPage() {
       })
       const data = await response.json();
       setConversationId(data.conversationId);
-
-
-
       if (!response.ok) {
         setError(data.error || 'submitting text to endpoint failed');
         return;
       }
-
       setPageText(prev =>
         [
           ...prev,
@@ -64,7 +60,6 @@ export default function DebuggerPage() {
         ]
       )
       setError('False');
-
     } catch (err) {
       console.log('Textarea error', err);
       setError('True');
@@ -79,20 +74,20 @@ export default function DebuggerPage() {
   }
 
   return (
-    <div className='flex flex-row min-h-screen'>
+    <div className='flex flex-row h-screen overflow-hidden'>
       <Nav />
       {mobileMenu ? (<div className='fixed inset-0 bg-black/20 z-40 md:hidden' onClick={toggleMobileNav} />) : (<div className='md:hidden' />)}
 
-      <div className='bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white flex-1'>
-        <div className='grow flex flex-col h-screen'>
+      <div className='bg-stone-100 text-zinc-800 dark:bg-[#0b111e] dark:text-white flex-1 flex flex-col min-h-0'>
+        <div className='flex-1 flex flex-col min-h-0'>
           <TopBar />
           {/* main content */}
-          <div className='flex w-full h-full min-h-0'>
+          <div className='flex flex-1 min-h-0'>
             {/* sessions sidebar */}
             {sessions && (
               <div className='fixed inset-0 bg-black/20 z-40 xl:hidden' onClick={handleSessions} />
             )}
-            <div className={`${sessions === false ? 'hidden' : 'fixed top-0 left-0 h-full w-80 z-50 xl:relative xl:w-auto xl:flex-[2] min-w-80'} bg-stone-100 dark:bg-[#0b111e] border-r border-gray-300 dark:border-[#182543]`}>
+            <div className={`${sessions === false ? 'hidden' : 'fixed top-0 left-0 h-full w-80 z-50 xl:relative w-auto xl:flex-[2] min-w-80'} bg-stone-100 dark:bg-[#0b111e] border-r border-gray-300 dark:border-[#182543]`}>
               <div className='flex flex-col'>
                 <div className='border-b border-gray-300 dark:border-gray-800 flex justify-between px-4'>
                   <p className=' py-3 text-zinc-800 dark:text-white'>Sessions</p>
@@ -121,7 +116,7 @@ export default function DebuggerPage() {
             </div>
 
             {/* chat area */}
-            <div className={` ${sessions === false ? 'w-full flex flex-col h-full min-h-0' : 'flex-9 flex flex-col h-full min-h-0'}`}>
+            <div className={` ${sessions === false ? 'w-full flex flex-1 flex-col h-full min-h-0' : 'flex-9 flex flex-col h-full min-h-0'}`}>
               <div className='flex-none border-b border-gray-300 dark:border-[#182543] flex justify-items-start gap-3 pl-4 lg:pl-8 py-4'>
                 <div className='grow'>
                   <button onClick={handleSessions} className='pb-4 text-gray-500 text-sm underline underline-offset-2 cursor-pointer flex items-center'>
@@ -132,7 +127,7 @@ export default function DebuggerPage() {
                 </div>
               </div>
 
-              <div className='flex-1 min-h-0 overflow-y-auto border-b border-gray-300 dark:border-[#182543] min-w-full xl:px-92'>
+              <div className='flex-1 h-max min-h-0 overflow-y-auto border-b border-gray-300 dark:border-[#182543] px-[2rem] lg:px-[16rem] xl:px-[21rem] 2xl:px-[26rem] 3xl:px-[34rem]'>
 
                 {pageText.length === 0 ?
                   (<div className='flex align-content-end lg:justify-center h-full pt-2 sxl:pt-60'>

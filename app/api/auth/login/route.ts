@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { pool } from '@/app/lib/db';
 import { cookies } from 'next/headers';
 import { createUserSession } from '@/app/lib/auth';
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { email, password } = body;
@@ -38,6 +38,10 @@ export async function POST(req: Request) {
     }
 
     const sessionToken = await createUserSession(user.id);
+
+    if (!sessionToken) {
+      return NextResponse.json({ error: 'Failed to create session' }, { status: 500 });
+    }
 
     const cookieStore = await cookies();
     cookieStore.set('session_token', sessionToken, {

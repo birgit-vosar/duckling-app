@@ -41,8 +41,12 @@ export function useTimeTracker() {
     return () => clearInterval(countdown);
   }, [canCollect]);
 
-  function markCollected() {
+  async function markCollected() {
     setCanCollect(false);
+    const res = await fetch('/api/user/update-time');
+    const data = await res.json();
+    setSecondsUntilNext(data.secondsUntilNext);
+    setCanCollect(data.canCollect);
   }
 
   return { canCollect, markCollected, loading, secondsUntilNext };
