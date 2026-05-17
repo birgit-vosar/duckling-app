@@ -175,7 +175,7 @@ export default function DebuggerPage() {
                         name='message'
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
-                        placeholder={'Whats the bug?'}
+                        placeholder={`What's the bug?`}
                         rows={4}
                         className={`block w-full rounded-md px-3.5 py-2 text-sm border-2 focus:outline-2 focus:-outline-offset-2
                           bg-white dark:bg-transparent text-gray-800 border-gray-200 placeholder:text-zinc-400 focus:outline-gray-400

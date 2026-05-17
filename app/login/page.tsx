@@ -62,7 +62,7 @@ export default function Login() {
                             </div>
                         )}
                         <div>
-                            <label className='text-white'>
+                            <label className='text-white '>
                                 Email
                             </label>
                             <div className='mt-2'>
