@@ -6,6 +6,7 @@ import TopBar from '@/app/components/TopBar';
 import { useState, useEffect, useRef } from 'react';
 import DebuggerLoading from '@/app/components/DebuggerLoading';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm'
 
 export default function DebuggerPage() {
   const { mobileMenu, toggleMobileNav } = useNav();
@@ -145,12 +146,12 @@ export default function DebuggerPage() {
                         (text.role === 'user' ?
                           (
                             <div key={index} className='text-wrap mb-6 px-5 py-4 dark:bg-slate-800 bg-gray-200 border-transparent w-fit max-w-md place-self-end border rounded-md dark:border-transparent'>
-                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkdown>{text.content}</ReactMarkdown></div>
+                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkdown remarkPlugins={[remarkGfm]}>{text.content}</ReactMarkdown></div>
                             </div>
                           ) :
                           (
                             <div key={index} className='text-wrap mb-6 px-5 py-6  dark:bg-slate-900 bg-white border border-gray-200 rounded-md dark:border-[#182543] w-fit max-w-md'>
-                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkdown>{text.content}</ReactMarkdown></div>
+                              <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkdown remarkPlugins={[remarkGfm]}>{text.content}</ReactMarkdown></div>
                             </div>
                           )
                         )
