@@ -144,12 +144,12 @@ export default function DebuggerPage() {
                       {pageText.map((text, index) => (
                         (text.role === 'user' ?
                           (
-                            <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-800 bg-gray-200 border-transparent w-fit max-w-md place-self-end border rounded-md dark:border-transparent'>
+                            <div key={index} className='text-wrap mb-6 px-5 py-2 dark:bg-slate-800 bg-gray-200 border-transparent w-fit max-w-md place-self-end border rounded-md dark:border-transparent'>
                               <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkdown>{text.content}</ReactMarkdown></div>
                             </div>
                           ) :
                           (
-                            <div key={index} className='mb-6 px-5 py-2 dark:bg-slate-900 bg-white border border-gray-200 rounded-md dark:border-[#182543] w-fit max-w-md'>
+                            <div key={index} className='text-wrap mb-6 px-5 py-2 dark:bg-slate-900 bg-white border border-gray-200 rounded-md dark:border-[#182543] w-fit max-w-md'>
                               <div className='w-fit prose prose-sm dark:prose-invert max-w-none'><ReactMarkdown>{text.content}</ReactMarkdown></div>
                             </div>
                           )
