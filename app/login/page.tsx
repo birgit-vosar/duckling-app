@@ -51,7 +51,7 @@ export default function Login() {
         <div className='bg-[#0b111e] flex flex-col items-center justify-center min-h-screen  '>
             <div className='bg-[#0e1525] p-6 border border-[#182543] rounded-lg w-full max-w-md'>
                 <div>
-                    <h2 className='mb-1 text-center font-semibold text-2xl/9 tracking-tight'>🦆 WorkFlow Companion</h2>
+                    <h2 className='mb-1 text-white text-center font-semibold text-2xl/9 tracking-tight'>🦆 WorkFlow Companion</h2>
                     <p className='mb-6 text-center text-gray-300 text-md/9 '>welcome to login</p>
                 </div>
                 <div>
@@ -62,13 +62,13 @@ export default function Login() {
                             </div>
                         )}
                         <div>
-                            <label>
+                            <label className='text-white'>
                                 Email
                             </label>
                             <div className='mt-2'>
                                 <input
                                     id='email' name='email' type='email' required autoComplete='email'
-                                    className='bg-[#0b111e] w-full outline-1 -outline-offset-1 outline-[#182543] placeholder:text-muted-foreground
+                                    className='text-[#ededed] bg-[#0b111e] w-full outline-1 -outline-offset-1 outline-[#182543] placeholder:text-muted-foreground
                                     px-3 py-1.5
                                     rounded-md 
                                     sm:text-sm/6
@@ -78,13 +78,13 @@ export default function Login() {
                             </div>
                         </div>
                         <div>
-                            <label>
+                            <label className='text-white'>
                                 Password
                             </label>
                             <div className='mt-2'>
                                 <input
                                     id='password' name='password' type='password' required autoComplete='current-password'
-                                    className='bg-[#0b111e] w-full outline-1 -outline-offset-1 outline-[#182543] placeholder:text-muted-foreground
+                                    className='text-[#ededed] bg-[#0b111e] w-full outline-1 -outline-offset-1 outline-[#182543] placeholder:text-muted-foreground
                                     px-3 py-1.5
                                     rounded-md
                                     sm:text-sm/6
