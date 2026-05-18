@@ -72,7 +72,7 @@ export default function SkinsPage() {
                         <div className='flex dark:bg-[#0e1525] bg-[#fbf7f7] border border-gray-300 rounded-md dark:border-gray-800 m-6 gap-4 h-full p-4'>
                             <div className='relative w-[120px] h-[120px] mt-2'>
                                 {loading ? (<div className='flex items-center justify-center mt-8'>
-                                    <div className='w-8 h-8 border-4 border-gray-300 border-t-transparent rounded-full animate-spin'></div>
+                                    <div className='min-w-8 min-h-8 w-8 h-8 border-4 border-gray-300 border-t-transparent rounded-full animate-spin'></div>
                                 </div>) : (<><img className='object-contain' src={darkMode ? '/assets/duck4.png' : '/assets/duck5.png'} />
                                     <img className='object-contain absolute inset-0 -translate-y-4' src={`/assets/${equippedSkin}.png`} /></>)}
                             </div>
